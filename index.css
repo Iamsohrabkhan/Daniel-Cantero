@@ -1,0 +1,15 @@
+body {
+  overflow-x: clip;
+}
+
+.clip-50 {
+  clip-path: inset(50% 50% 50% 50%);
+}
+
+.clip-0 {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.clip-transition {
+  transition: clip-path 0.3s ease-out;
+}
