@@ -7,6 +7,5 @@ document.addEventListener("DOMContentLoaded", () => {
   hoverListAnimations();
   archieveMarqueeAnimations();
   teamAnimation();
+  faqAnimation();
 });
-
-
