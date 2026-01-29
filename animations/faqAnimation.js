@@ -2,7 +2,10 @@ const faqAnimation = () => {
   const faqs = document.querySelectorAll(".faqs_question_answer");
   let activeFaq = null;
 
-  faqs.forEach((faq) => {
+  faqs.forEach((faq,index) => {
+    gsap.effects["slide-up"](faq, {
+      delay: index * 0.05, // now works because only one element is passed
+    });
     const question = faq.querySelector(".faqs_question");
     const answer = faq.querySelector(".faqs_answer");
     const icon = faq.querySelector(".faq_icon");
@@ -61,5 +64,3 @@ const faqAnimation = () => {
     });
   });
 };
-
-faqAnimation();

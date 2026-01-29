@@ -1,4 +1,3 @@
-
 const parallaxImagesAnimation = () => {
   const parallaxImages = document.querySelectorAll(".parallax_image");
   const processRevealImage = document.querySelectorAll(".process_reveal_image");
@@ -18,5 +17,15 @@ const parallaxImagesAnimation = () => {
     const scrollProgress = rect.top / window.innerHeight;
     const translateY = -scrollProgress * 150;
     curr.style.transform = `translateY(${translateY}px)`;
+  });
+};
+const projectAnimation = () => {
+  const projectParagraph = gsap.utils.toArray(".project_paragraph");
+  const projectTags = gsap.utils.toArray(".project_tags");
+  projectParagraph.forEach((curr) => {
+    gsap.effects.fade(curr);
+  });
+  projectTags.forEach((curr) => {
+    gsap.effects.fade(curr);
   });
 };

@@ -4,9 +4,19 @@ const hoverListAnimations = () => {
   );
   const serviceWrappers = document.querySelectorAll(".service_wrapper");
 
+  const listGridWrapperSlideLeft =
+    document.querySelectorAll(".list_grid");
+
+  listGridWrapperSlideLeft.forEach((curr, i) => {
+    gsap.effects["slide-left"]([curr,curr.nextSibling], {
+      delay: i * 0.04,
+    });
+  });
+
   serviceWrappers.forEach((servicewrapper, index) => {
     const listGridWrapper =
       servicewrapper.querySelectorAll(".list_grid_wrapper");
+
     const mouseFollowImage = servicewrapper.querySelectorAll(
       ".mouse_follow_image",
     );
