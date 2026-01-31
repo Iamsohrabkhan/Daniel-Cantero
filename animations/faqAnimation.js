@@ -1,7 +1,7 @@
 const faqAnimation = () => {
   const faqs = document.querySelectorAll(".faqs_question_answer");
   let activeFaq = null;
-
+if (faqs.length) {
   faqs.forEach((faq,index) => {
     gsap.effects["slide-up"](faq, {
       delay: index * 0.05, // now works because only one element is passed
@@ -63,4 +63,6 @@ const faqAnimation = () => {
       activeFaq = isOpen ? null : faq;
     });
   });
+  
+}
 };

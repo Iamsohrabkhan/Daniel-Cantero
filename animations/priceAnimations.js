@@ -3,12 +3,14 @@ const priceAnimation = () => {
   const elements = gsap.utils.toArray(".price_list, .price_paragraph");
   const priceButton = gsap.utils.toArray(".price_number, .price_button");
   
-
+if (priceButton.length) {
   priceButton.forEach((curr)=>{
     gsap.effects.fade(curr)
   })
+  
+}
 
-
+if (elements.length) {
   elements.forEach((el) => {
     gsap.fromTo(
       el,
@@ -29,4 +31,6 @@ const priceAnimation = () => {
       },
     );
   });
+  
+}
 };

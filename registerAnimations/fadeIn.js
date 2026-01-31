@@ -1,3 +1,5 @@
+CustomEase.create("primary", "0.8,0.2,0,1");
+
 gsap.registerEffect({
   name: "fade",
   effect: (targets, config) => {

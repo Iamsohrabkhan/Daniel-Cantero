@@ -6,13 +6,16 @@ const hoverListAnimations = () => {
 
   const listGridWrapperSlideLeft =
     document.querySelectorAll(".list_grid");
-
+if (listGridWrapperSlideLeft.length) {
   listGridWrapperSlideLeft.forEach((curr, i) => {
     gsap.effects["slide-left"]([curr,curr.nextSibling], {
       delay: i * 0.04,
     });
   });
+  
+}
 
+if (serviceWrappers.length) {
   serviceWrappers.forEach((servicewrapper, index) => {
     const listGridWrapper =
       servicewrapper.querySelectorAll(".list_grid_wrapper");
@@ -88,4 +91,6 @@ const hoverListAnimations = () => {
       });
     });
   });
+  
+}
 };

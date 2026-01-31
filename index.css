@@ -1,5 +1,9 @@
-body {
+/* body {
   overflow-x: clip;
+} */
+
+*{
+  /* border: 3px solid rgba(255, 0, 0, 1); */
 }
 
 .clip-50 {
