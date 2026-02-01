@@ -1,4 +1,5 @@
-gsap.registerEffect({
+const slideLeft=()=>{
+  gsap.registerEffect({
   name: "slide-up",
   effect: (targets, config) => {
     gsap.set(targets, { opacity: 0, y: 100 });
@@ -26,3 +27,5 @@ gsap.registerEffect({
   },
 });
 
+
+}

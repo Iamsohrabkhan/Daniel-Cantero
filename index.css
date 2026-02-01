@@ -2,9 +2,9 @@
   overflow-x: clip;
 } */
 
-*{
-  /* border: 3px solid rgba(255, 0, 0, 1); */
-}
+/* * {
+  border: 3px solid rgba(255, 0, 0, 1);
+} */
 
 .clip-50 {
   clip-path: inset(50% 50% 50% 50%);
@@ -36,7 +36,9 @@
   transform-style: preserve-3d;
 }
 .hero_char,
-.section_heading_char {
+.section_heading_char,
+.project_heading_char,
+.page_hero_char {
   perspective: 500px;
   will-change: "transform";
 
@@ -56,6 +58,11 @@
   opacity: 0;
   will-change: "transform";
   transform: translateY(45);
+}
+.page_hero_char{
+  transform: translateY(-310%);
+  will-change: "transform";
+
 }
 
 .pricing_container {

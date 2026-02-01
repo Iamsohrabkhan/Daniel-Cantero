@@ -55,6 +55,7 @@ const sectionHeaderAnimation = () => {
   }
 
   const sectionHeader = gsap.utils.toArray(".section_header");
+
   if (sectionHeader.length) {
     sectionHeader.forEach((curr) => {
       const subHeading = curr.querySelector(".section_sub_heading");

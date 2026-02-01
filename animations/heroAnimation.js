@@ -4,7 +4,6 @@ CustomEase.create("secondary", "0.6, 0.4, 0, 1");
 
 const heroAnimation = () => {
   const hero = document.querySelector(".hero__container");
-  console.log("🚀 ~ heroAnimation ~ hero:", hero)
   const heroList = gsap.utils.toArray(".hero_list_item");
   if (hero) {
     let split = SplitText.create(".hero_heading", {
