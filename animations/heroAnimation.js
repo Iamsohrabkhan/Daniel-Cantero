@@ -3,6 +3,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
 
 const heroAnimation = () => {
+  
   const hero = document.querySelector(".hero__container");
   const heroList = gsap.utils.toArray(".hero_list_item");
   if (hero) {
@@ -21,18 +22,9 @@ const heroAnimation = () => {
     const tl = gsap.timeline();
 
     // Initial state
-
-    tl.fromTo(
-      ".overlay",
-      {
-        autoAlpha: 1,
-      },
-      {
-        autoAlpha: 0,
-        duration: 0.4,
-        ease: "secondary",
-      },
-    );
+    tl.set([".hero_heading", ".hero_description",], {
+      opacity: 1,
+    });
 
     tl.fromTo(
       ".hero_line1 .hero_char",
@@ -63,6 +55,18 @@ const heroAnimation = () => {
       },
       0,
     );
+    tl.fromTo(
+      ".overlay",
+      {
+        autoAlpha: 1,
+      },
+      {
+        autoAlpha: 0,
+        duration: 0.4,
+        ease: "secondary",
+      },"<0.4"
+    );
+
     tl.fromTo(
       ".hero_description_line",
       {
@@ -105,4 +109,3 @@ const heroAnimation = () => {
     // WAIT FOR FULL PAGE LOAD (HTML + CSS + IMAGES)
   }
 };
-

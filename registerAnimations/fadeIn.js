@@ -26,6 +26,9 @@ const fadeInAnimation = () => {
     },
   });
 
+
+  
+
   const privacyAndTerms = gsap.utils.toArray(
     ".privacy_heading_wrapper, .privacy_lists, .privac_information_heading",
   );

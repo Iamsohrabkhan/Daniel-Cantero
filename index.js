@@ -6,7 +6,6 @@ const workAnimations = () => {
   const hero = document.querySelectorAll(".work_hero_section");
 
   const isAnimate = document.querySelectorAll("[is-animate='no']");
-  console.log("🚀 ~ workAnimations ~ isAnimate:", isAnimate)
   if (!isAnimate.length) {
     if (hero.length) {
       hero.forEach((curr) => {
@@ -66,3 +65,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+

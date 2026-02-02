@@ -1,4 +1,7 @@
+const canvaDiv = document.querySelector(".canva");
+const grid = new ElasticGrid(canvaDiv);
 const archieveMarqueeAnimations = () => {
+  const stickyArchieve = document.querySelector(".sticky_archieve");
   const archieveMarquee = document.querySelectorAll(".archieve_marquee");
   const archieveImageParallax = document.querySelectorAll(
     ".archieve_image_parallax",
@@ -35,8 +38,11 @@ const archieveMarqueeAnimations = () => {
       end: "80% bottom",
       scrub: 1,
       invalidateOnRefresh: true,
+
       onEnter: () => {
         console.log("entered");
+
+        // grid.playEntryAnimation(1000);
       },
       onLeave: () => {
         console.log("left");
@@ -79,6 +85,22 @@ const archieveMarqueeAnimations = () => {
       x: 0,
       ease: "none",
       willChange: "transform",
+      onComplete: () => {},
+
+      onStart: () => {},
+      onUpdate: () => {
+        const currentX = gsap.getProperty(archieveMarquee[1], "x");
+        // use currentX here
+        if (currentX === 0) {
+          if (!stickyArchieve.classList.contains("sticky_mask")) {
+            stickyArchieve.classList.add("sticky_mask");
+          }
+        } else {
+          if (stickyArchieve.classList.contains("sticky_mask")) {
+            stickyArchieve.classList.remove("sticky_mask");
+          }
+        }
+      },
     },
     0,
   );
@@ -92,6 +114,16 @@ const archieveMarqueeAnimations = () => {
         clipPath: index !== 0 ? "inset(0%)" : null,
         willChange: "transform",
         ease: "none",
+        onComplete: () => {
+          if (index === archieveImageParallax.length - 1) {
+            gsap.to(grid, {
+              animationProgress: 1,
+              duration: 1,
+              delay: 0.2,
+              ease: "power2.out",
+            });
+          }
+        },
       },
       index === 0 ? ">" : ">",
     );

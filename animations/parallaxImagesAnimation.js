@@ -26,7 +26,9 @@ const parallaxImagesAnimation = () => {
 
 // page hero section animations
 const projectAnimation = () => {
-  const projectTitle = gsap.utils.toArray(".project_heading, .archieve_heading");
+  const projectTitle = gsap.utils.toArray(
+    ".project_heading, .archieve_heading",
+  );
   const projectParagraph = gsap.utils.toArray(".project_paragraph");
   const projectTags = gsap.utils.toArray(".project_tags");
 
@@ -72,42 +74,48 @@ const projectAnimation = () => {
 };
 
 const pageHeroLoadAnimations = () => {
-  const tl = gsap.timeline();
   const hero = document.querySelector(".work_hero_section");
-  const heading = hero.querySelector(".hero_heading");
-  const paragraph = hero.querySelector(".work_hero_paragraph");
-  const splitParagraph = SplitText.create(paragraph, {
-    type: "chars, lines",
-    mask: "lines",
-    autoSplit: true,
-    charsClass: "section_paragraph_char",
-  });
+  if (hero) {
+    const heading = hero.querySelector(".section_hero_heading");
+    const paragraph = hero.querySelector(".work_hero_paragraph");
+    const tl = gsap.timeline();
+    const splitParagraph = SplitText.create(paragraph, {
+      type: "chars, lines",
+      mask: "lines",
+      linesClass: "section_hero_line",
+      autoSplit: true,
+      charsClass: "section_paragraph_char",
+    });
 
-  if (heading || hero) {
-    tl.add(gsap.effects.heroHeadingReveal(heading));
-    tl.fromTo(
-      splitParagraph.lines,
-      {
-        yPercent: 100,
-      },
-      {
-        yPercent: 0,
-        stagger: 0.02,
-        duration: 0.4,
-      },
-      0.5
-    );
-    tl.fromTo(
-      ".hero_footer_text",
-      {
-        yPercent: 100,
-      },
-      {
-        yPercent: 0,
-        stagger: 0.02,
-        duration: 0.4,
-      },
-      0.6
-    );
+    if (heading || hero) {
+      tl.set([heading, ".work_hero_paragraph", ".hero_footer_text"], {
+        opacity: 1,
+      });
+      tl.add(gsap.effects.heroHeadingReveal(heading));
+      tl.fromTo(
+        splitParagraph.lines,
+        {
+          yPercent: 100,
+        },
+        {
+          yPercent: 0,
+          stagger: 0.02,
+          duration: 0.4,
+        },
+        0.5,
+      );
+      tl.fromTo(
+        ".hero_footer_text",
+        {
+          yPercent: 100,
+        },
+        {
+          yPercent: 0,
+          stagger: 0.02,
+          duration: 0.4,
+        },
+        0.6,
+      );
+    }
   }
 };

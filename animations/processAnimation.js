@@ -5,10 +5,10 @@ const processAnimation = () => {
       gsap.set(card, {
         rotateY: -30,
         transformOrigin: "left top",
-        y: 200 * index,
+        y: index === 0 ? 200 : index === 1 ? 350 :450,
         willChange: "transform",
       });
-  
+
       gsap.to(card, {
         rotateY: 0,
         y: index * 30,
@@ -20,6 +20,5 @@ const processAnimation = () => {
         },
       });
     });
-    
   }
 };
