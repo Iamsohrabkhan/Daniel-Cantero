@@ -1,31 +1,7 @@
 gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
+
 const lenis = new Lenis();
 lenis.on("scroll", ScrollTrigger.update);
-
-const workAnimations = () => {
-  const hero = document.querySelectorAll(".work_hero_section");
-
-  const isAnimate = document.querySelectorAll("[is-animate='no']");
-  if (!isAnimate.length) {
-    if (hero.length) {
-      hero.forEach((curr) => {
-        gsap.to(curr, {
-          scale: 0.9,
-          y: -100,
-          opacity: 0.5,
-          scrollTrigger: {
-            trigger: document.documentElement,
-            start: "top top",
-            end: () => {
-              return `${innerHeight}px top`;
-            },
-            scrub: 1,
-          },
-        });
-      });
-    }
-  }
-};
 
 if (document.readyState === "complete") {
   heroAnimation();
@@ -55,14 +31,68 @@ document.addEventListener("DOMContentLoaded", () => {
   priceAnimation();
 
   // work section animations
-  workAnimations();
+  pageHeroAnimations();
+  initMarqueeAnimations();
 
-  const contactPageWrapper = document.querySelector(".contact_page_wrapper");
-  const workHeroParagraph = document.querySelector(".work_hero_paragraph");
-  if (contactPageWrapper) {
-    lenis.on("scroll", (e) => {
-      workHeroParagraph.style.setProperty("--y", `${-e.animatedScroll}px`);
+  // ===== Footer headings animation =====
+
+  const footerHeading = document.querySelectorAll(".footer_heading");
+
+  const footerBg = document.querySelector(".footer_background");
+
+  const s = SplitText.create(footerHeading, {
+    type: "lines, chars",
+    mask: "lines",
+    linesClass: "footer_line++",
+    charsClass: "footer_char",
+  });
+  const tl = gsap.timeline({ paused: true });
+
+  tl.fromTo(
+    ".footer_line1 .footer_char",
+    {
+      y: "-340%",
+      rotateX: -24,
+    },
+    {
+      y: "0%",
+      rotateX: 0,
+      ease: "secondary",
+      duration: 0.8,
+      stagger: 0.02,
+    },
+  );
+  tl.fromTo(
+    ".footer_line2 .footer_char",
+    {
+      y: "-340%",
+      rotateX: -24,
+    },
+    {
+      y: "0%",
+      rotateX: 0,
+      ease: "secondary",
+      duration: 0.8,
+      stagger: 0.02,
+    },
+    0.2,
+  );
+
+  // ===== Footer background reveal =====
+  if (footerBg) {
+    ScrollTrigger.create({
+      trigger: footerBg,
+      start: "top center",
+      end: "bottom top",
+      // markers: true,
+
+      onEnter: () => {
+        tl.play();
+      },
+      onLeaveBack: () => {
+        tl.pause(0);
+      },
+      toggleClass: { targets: footerBg, className: "reveal" },
     });
   }
 });
-

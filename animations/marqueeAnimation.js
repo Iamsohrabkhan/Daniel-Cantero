@@ -1,19 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
+function initMarqueeAnimations() {
   /* ===========================
-   TWEAKING CONTROLS (DEFAULTS)
-   =========================== */
+     TWEAKING CONTROLS (DEFAULTS)
+  =========================== */
 
-  const VELOCITY_RESPONSE = 0.1;
-  const VELOCITY_FRICTION = 0.95;
-  const DELTA_DAMPING = 0.9;
-  const BASE_SPEED = 0.002;
-  const SCROLL_MULTIPLIER = 0.01;
-  const MAX_VELOCITY = 10;
+  const VELOCITY_RESPONSE = 0.22;
+  const VELOCITY_FRICTION = 0.94;
+  const DELTA_DAMPING = 0.82;
+  const BASE_SPEED = 0.004;
+  const SCROLL_MULTIPLIER = 0.02;
+  const MAX_VELOCITY = 14;
 
   /* ===========================
-   SETUP
-   =========================== */
-
+     SETUP
+  =========================== */
   const wrapper = gsap.utils.wrap(-50, 0);
   const clamper = gsap.utils.clamp(-MAX_VELOCITY, MAX_VELOCITY);
 
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const marquees = Array.from(document.querySelectorAll(".marquee")).map(
     (el) => {
-      // Parse data attributes or use defaults
       const velocityResponse =
         parseFloat(el.dataset.velocityResponse) || VELOCITY_RESPONSE;
       const velocityFriction =
@@ -36,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
         el,
         reverse: el.hasAttribute("data-marquee-reverse"),
         setX: gsap.quickSetter(el, "x", "%"),
-        value: 0, // Each marquee tracks its own position
-        smoothVelocity: 0, // Each marquee has its own smooth velocity
+        value: 0,
+        smoothVelocity: 0,
         velocityResponse,
         velocityFriction,
         deltaDamping,
@@ -48,9 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   /* ===========================
-   SCROLL HANDLING
-   =========================== */
-
+     SCROLL HANDLING
+  =========================== */
   lenis.on("scroll", ({ velocity, direction }) => {
     const targetVelocity = clamper(velocity * SCROLL_MULTIPLIER);
     smoothVelocity = gsap.utils.interpolate(
@@ -61,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     downwardScroll = direction !== -1;
 
-    // Update each marquee's individual smooth velocity
     marquees.forEach((m) => {
       const targetVel = clamper(velocity * m.scrollMultiplier);
       m.smoothVelocity = gsap.utils.interpolate(
@@ -73,17 +69,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ===========================
-   TICKER LOOP
-   =========================== */
-
+     TICKER LOOP
+  =========================== */
   gsap.ticker.add((time, deltaTime) => {
-    parallaxImagesAnimation();
+    if (typeof parallaxImagesAnimation === "function") {
+      parallaxImagesAnimation();
+    }
+
     lenis.raf(time * 1000);
     smoothVelocity *= VELOCITY_FRICTION;
 
     marquees.forEach((m) => {
       m.smoothVelocity *= m.velocityFriction;
+
       const dampedDelta = gsap.utils.interpolate(0, deltaTime, m.deltaDamping);
+
       if (downwardScroll) {
         m.value += dampedDelta * m.baseSpeed + m.smoothVelocity;
       } else {
@@ -91,9 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const xValue = m.reverse ? wrapper(m.value) : wrapper(-m.value);
+
       m.setX(xValue);
     });
   });
 
   gsap.ticker.lagSmoothing(0);
-});
+}

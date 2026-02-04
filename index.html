@@ -454,9 +454,32 @@
     <div class="canva"></div>
 
     <script>
-      // Initialize - find the div with class 'canva' and convert it to canvas
+      function createGridController(container, options = {}) {
+        let instance = null;
 
-      const grid = new ElasticGrid(document.querySelector(".canva"), {
+        return {
+          create() {
+            if (instance) return;
+
+            instance = new ElasticGrid(container, options);
+            instance.playEntryAnimation(1000);
+          },
+
+          destroy() {
+            if (!instance) return;
+
+            instance.destroy();
+            container.innerHTML = "";
+            instance = null;
+          },
+
+          isActive() {
+            return !!instance;
+          },
+        };
+      }
+
+      const grid = createGridController(document.querySelector(".canva"), {
         gridSize: 20,
         cellSize: 120,
         enableHover: true,
@@ -464,33 +487,15 @@
         liquidEffect: 5,
         waveAmplitude: 0,
       });
-      // Start with entry animation (fade in over 1 second)
-      grid.playEntryAnimation(1000);
 
-      // Example: How to use with external animations / GSAP / other libraries
-      //
-      // Method 1: Start hidden, then animate in
-      // grid.animationProgress = 0; // Start invisible
-      // grid.playEntryAnimation(1000); // Fade in over 1 second
-      //
-      // Method 2: Control with GSAP
-      // gsap.to(grid, {
-      //     animationProgress: 1,
-      //     duration: 1,
-      //     ease: "power2.out"
-      // });
-      //
-      // Method 3: Pause/Play programmatically
-      // grid.pause();  // Pause the animation
-      // setTimeout(() => grid.play(), 2000);  // Resume after 2 seconds
-      //
-      // Method 4: Reset and replay
-      // grid.reset();  // Reset to initial state
-      // grid.playEntryAnimation(1500);  // Animate in again
-      //
-      // Access the grid instance globally if needed
+      // First time
+      // grid.create();
 
-      window.elasticGrid = grid;
+      // Later
+      // grid.destroy();
+
+      // Again with fresh animation
+      // grid.create();
     </script>
   </body>
 </html>
