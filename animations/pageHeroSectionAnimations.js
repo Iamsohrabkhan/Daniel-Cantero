@@ -1,5 +1,8 @@
 const pageHeroAnimations = () => {
-  const hero = document.querySelectorAll(".work_hero_section");
+  const hero = document.querySelectorAll([
+    ".work_hero_section",
+    ".work_detail_hero",
+  ]);
 
   const isAnimate = document.querySelectorAll("[is-animate='no']");
   if (!isAnimate.length) {

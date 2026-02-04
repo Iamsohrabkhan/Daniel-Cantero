@@ -37,6 +37,7 @@ const archieveMarqueeAnimations = () => {
         start: "top top",
         end: "center bottom",
         scrub: 1,
+        // markers: true,
         invalidateOnRefresh: true,
 
         onEnter: () => {
@@ -49,6 +50,9 @@ const archieveMarqueeAnimations = () => {
             // opacity: 1,
             duration: 0.4,
             delay: 0.2,
+            onComplete: () => {
+              grid.create();
+            },
           });
         },
         onEnterBack: () => {
@@ -57,11 +61,14 @@ const archieveMarqueeAnimations = () => {
             scale: 0,
             // opacity: 0,
             duration: 0.4,
+            onComplete: () => {
+              grid.destroy();
+            },
           });
         },
-        onLeaveBack: () => {
-          console.log("leave back");
-        },
+        // onLeaveBack: () => {
+        //   console.log("leave back");
+        // },
         // markers: true,
       },
     });
@@ -112,32 +119,95 @@ const archieveMarqueeAnimations = () => {
           clipPath: index !== 0 ? "inset(0%)" : null,
           willChange: "transform",
           ease: "none",
-          onComplete: () => {
-            if (index === archieveImageParallax.length - 1) {
-              grid.create();
-            } else {
-              grid.destroy();
-            }
-          },
         },
         index === 0 ? ">" : ">",
       );
     });
-  }
-  const t2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".archieve_container",
-      scrub: true,
-      endTrigger: ".sticky_text_wrapper",
-      start: "70% top",
-      end: "bottom bottom",
-      onUpdate: ({ progress }) => {
-        console.log(progress);
+
+    const t2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".archieve_container",
+        start: "center bottom", // EXACTLY where tl ends
+        end: "bottom bottom",
+        scrub: 1,
+        // markers: {
+        //   startColor: "white",
+        //   endColor: "white",
+        //   fontSize: "18px",
+        //   fontWeight: "bold",
+        //   indent: 20,
+        // },
       },
-    },
-  });
-  const archieveText = document.querySelector(".archieve_text");
-  t2.to(archieveText, {
-    x: "-90%",
-  });
+    });
+
+    t2.fromTo(
+      ".archieve_text",
+      {
+        y: "100vh",
+      },
+      {
+        y: "0vh",
+      },
+    );
+
+    const archieveText = document.querySelector(".archieve_text");
+    const splitArchieveText = SplitText.create(archieveText, {
+      type: "chars",
+      charsClass: "arc_text++",
+    });
+    const { width } = archieveText.getBoundingClientRect();
+
+    // create a temp span to measure one letter
+    const letterSpan = document.createElement("span");
+    letterSpan.textContent = archieveText.textContent.trim()[0] || "A";
+    letterSpan.style.position = "absolute";
+    letterSpan.style.visibility = "hidden";
+    letterSpan.style.whiteSpace = "nowrap";
+
+    // copy font styles
+    const styles = window.getComputedStyle(archieveText);
+    letterSpan.style.font = styles.font;
+
+    document.body.appendChild(letterSpan);
+
+    const oneLetterWidth = letterSpan.getBoundingClientRect().width;
+
+    document.body.removeChild(letterSpan);
+
+    const calcX = width - innerWidth + oneLetterWidth * 3;
+
+    t2.to(".archieve_text", {
+      x: () => {
+        return `${-calcX}px`;
+      },
+    });
+    const letters = document.querySelectorAll(".archieve_text .arc_text");
+
+    gsap.set(".arc_text", {
+      yPercent: "random(-200,200),",
+      rotation: "random(-30,30)",
+      // opacity:0
+    });
+    letters.forEach((letter) => {
+      ScrollTrigger.create({
+        trigger: ".archieve_container", // or scroll parent
+        start: "top top",
+        end: "bottom 90%",
+
+        onUpdate: () => {
+          const rect = letter.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+
+          if (rect.left >= 0 && rect.right <= viewportWidth) {
+            letter.style.transition = `transform 0.6s cubic-bezier(0.2, 0.8, 0, 1) 0.05s`;
+
+            letter.style.transform = "translateY(0%)";
+            // letter.style.opacity = 1;
+          } else {
+            // letter.style.color = ""; // reset
+          }
+        },
+      });
+    });
+  }
 };

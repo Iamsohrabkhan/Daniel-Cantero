@@ -165,10 +165,12 @@
   perspective: 1200px;
 }
 
-.sticky_archieve {
-}
 .archieve_text {
   max-width: max-content;
+  transform: translateY(100vh);
+}
+.arc_text1 {
+  transform: translateY(0%) rotate(0deg) !important;
 }
 .sticky_mask {
   mask:
@@ -228,6 +230,8 @@
 .hero_description,
 .section_hero_heading,
 .work_hero_paragraph,
-.hero_footer_text {
+.hero_footer_text,
+.work_detail_hero_footer,
+.work_detail_hero_list_text {
   opacity: 0;
 }

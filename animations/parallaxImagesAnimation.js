@@ -54,7 +54,7 @@ const projectAnimation = () => {
       gsap.fromTo(
         curr.querySelectorAll(".project_heading_char"),
         {
-          y: "-350%",
+          y: "-340%",
           rotateX: -24,
         },
         {
@@ -70,52 +70,5 @@ const projectAnimation = () => {
         },
       );
     });
-  }
-};
-
-const pageHeroLoadAnimations = () => {
-  const hero = document.querySelector(".work_hero_section");
-  if (hero) {
-    const heading = hero.querySelector(".section_hero_heading");
-    const paragraph = hero.querySelector(".work_hero_paragraph");
-    const tl = gsap.timeline();
-    const splitParagraph = SplitText.create(paragraph, {
-      type: "chars, lines",
-      mask: "lines",
-      linesClass: "section_hero_line",
-      autoSplit: true,
-      charsClass: "section_paragraph_char",
-    });
-
-    if (heading || hero) {
-      tl.set([heading, ".work_hero_paragraph", ".hero_footer_text"], {
-        opacity: 1,
-      });
-      tl.add(gsap.effects.heroHeadingReveal(heading));
-      tl.fromTo(
-        splitParagraph.lines,
-        {
-          yPercent: 100,
-        },
-        {
-          yPercent: 0,
-          stagger: 0.02,
-          duration: 0.4,
-        },
-        0.5,
-      );
-      tl.fromTo(
-        ".hero_footer_text",
-        {
-          yPercent: 100,
-        },
-        {
-          yPercent: 0,
-          stagger: 0.02,
-          duration: 0.4,
-        },
-        0.6,
-      );
-    }
   }
 };

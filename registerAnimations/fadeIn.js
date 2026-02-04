@@ -1,4 +1,3 @@
-CustomEase.create("primary", "0.8,0.2,0,1");
 
 const fadeInAnimation = () => {
   gsap.registerEffect({
@@ -50,7 +49,7 @@ const fadeInAnimation = () => {
       yTo: "0%",
       rotateXTo: 0,
       duration: 1,
-      stagger: 0.06,
+      stagger: 0.05,
       ease: "secondary",
     },
     effect: (target, config) => {
