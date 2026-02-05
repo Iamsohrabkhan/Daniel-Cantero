@@ -83,8 +83,8 @@ const pageHeroLoadAnimations = () => {
         tl.add(gsap.effects.fade(firstEl));
       }
       if (gridColumnLines.length) {
-        console.log("grid lines exist", gridColumnLines[2]);
 
+        
         tl.fromTo(
           gridColumnLines,
           {

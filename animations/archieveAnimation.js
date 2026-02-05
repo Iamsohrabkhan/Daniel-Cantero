@@ -216,12 +216,50 @@ const archieveMarqueeAnimations = () => {
 };
 
 const archieveDetail = () => {
-
-
-  if (!detailPage) return;
-
-  initLenis({
-    infinite: true,
+  const heading = document.querySelector(".archieve_detail_heading");
+  const paragraph = document.querySelector(".archieve_detail_paragraph");
+  const image = document.querySelector(".archieve_detail_image");
+  const splitParagraph = SplitText.create(paragraph, {
+    type: "lines",
+    mask: "lines",
   });
-};
 
+  const seq = gsap.timeline();
+  const mm = gsap.matchMedia();
+
+  if (heading && splitParagraph?.lines) {
+    seq.set(heading, { opacity: 1 });
+    seq.set(paragraph, { opacity: 1 });
+
+    seq.set(splitParagraph.lines, {
+      yPercent: 100,
+      opacity: 0,
+    });
+
+    seq.add(gsap.effects.heroHeadingReveal(heading));
+
+    seq.to(
+      splitParagraph.lines,
+      {
+        opacity: 1,
+        yPercent: 0,
+        stagger: 0.02,
+        duration: 0.4,
+      },
+      0.5,
+    );
+
+    // Animate image ONLY if width is less than 478px
+    mm.add("(max-width: 477px)", () => {
+      seq.from(
+        image,
+        {
+          opacity: 0,
+          y: 20,
+          duration: 0.4,
+        },
+        0.7,
+      );
+    });
+  }
+};

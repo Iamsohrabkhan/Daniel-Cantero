@@ -55,9 +55,11 @@ const fadeInAnimation = () => {
     effect: (target, config) => {
       const split = SplitText.create(target, {
         type: config.splitType,
-        mask: config.mask,
+        // mask: config.mask,
+
         autoSplit: true,
         charsClass: config.charsClass,
+        linesClass: "page_hero_line",
       });
 
       const tl = gsap.timeline();

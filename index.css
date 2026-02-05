@@ -98,6 +98,10 @@
   );
 }
 
+.navbar_menu_lists {
+  clip-path: inset(0 0 100% 0);
+}
+
 .clip-50 {
   clip-path: inset(50% 50% 50% 50%);
 }
@@ -246,13 +250,19 @@
     /* clip-path: circle(72% at 50% 50%) !important; */
   }
 }
-
+.page_hero_line {
+  overflow-y: clip;
+  padding-right: 12px;
+}
 .hero_heading,
 .hero_description,
 .section_hero_heading,
 .work_hero_paragraph,
 .hero_footer_text,
 .work_detail_hero_footer,
-.work_detail_hero_list_text {
+.work_detail_hero_list_text,
+.archieve_detail_paragraph,
+.archieve_detail_heading,
+[data-animate="fadein"] {
   opacity: 0;
 }

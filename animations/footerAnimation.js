@@ -44,22 +44,24 @@ const footerAnimations = () => {
   );
 
   // ===== Footer background reveal =====
- 
-  
+
   if (footerBg) {
+    const isDesktop = window.innerWidth > 478;
+    !isDesktop && footerBg.classList.add("reveal");
+
     ScrollTrigger.create({
       trigger: footerBg,
       start: "top center",
       end: "bottom top",
-      // markers: true,
-
       onEnter: () => {
         tl.play();
       },
       onLeaveBack: () => {
         tl.pause(0);
       },
-      toggleClass: { targets: footerBg, className: "reveal" },
+      ...(isDesktop && {
+        toggleClass: { targets: footerBg, className: "reveal" },
+      }),
     });
   }
 };
