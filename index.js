@@ -1,9 +1,13 @@
+// import Lenis from "lenis";
+
 gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
 
 CustomEase.create("primary", "0.8,0.2,0,1");
-CustomEase.create("secondary", "0.6, 0.4, 0, 1");
-
-const lenis = new Lenis();
+CustomEase.create("secondary", "M0,0 C0.6,0.4 0,1 1,1");
+const detailPage = document.querySelector(".archieve_detail_image_wrapper");
+const lenis = new Lenis({
+  infinite: detailPage ? true : false,
+});
 lenis.on("scroll", ScrollTrigger.update);
 
 if (document.readyState === "complete") {
@@ -40,4 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // work section animations
   initMarqueeAnimations();
   workDetailAnimation();
+  archieveDetail();
+
+ 
+  studioAnimations();
 });

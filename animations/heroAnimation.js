@@ -1,7 +1,6 @@
 // HERO ANIMATION
 
 const heroAnimation = () => {
-  
   const hero = document.querySelector(".hero__container");
   const heroList = gsap.utils.toArray(".hero_list_item");
   if (hero) {
@@ -20,7 +19,7 @@ const heroAnimation = () => {
     const tl = gsap.timeline();
 
     // Initial state
-    tl.set([".hero_heading", ".hero_description",], {
+    tl.set([".hero_heading", ".hero_description"], {
       opacity: 1,
     });
 
@@ -62,7 +61,8 @@ const heroAnimation = () => {
         autoAlpha: 0,
         duration: 0.4,
         ease: "secondary",
-      },"<0.4"
+      },
+      "<0.4",
     );
 
     tl.fromTo(
@@ -94,7 +94,7 @@ const heroAnimation = () => {
       },
       "<",
     );
-    
+
     const aboutGrid = gsap.utils.toArray(".about_grid");
 
     aboutGrid.forEach((curr, i) => {
@@ -106,53 +106,5 @@ const heroAnimation = () => {
     });
 
     // WAIT FOR FULL PAGE LOAD (HTML + CSS + IMAGES)
-  }
-};
-
-
-const pageHeroLoadAnimations = () => {
-  const hero = document.querySelector(".work_hero_section");
-  if (hero) {
-    const heading = hero.querySelector(".section_hero_heading");
-    const paragraph = hero.querySelector(".work_hero_paragraph");
-    const tl = gsap.timeline();
-    const splitParagraph = SplitText.create(paragraph, {
-      type: "chars, lines",
-      mask: "lines",
-      linesClass: "section_hero_line",
-      autoSplit: true,
-      charsClass: "section_paragraph_char",
-    });
-
-    if (heading || hero) {
-      tl.set([heading, ".work_hero_paragraph", ".hero_footer_text"], {
-        opacity: 1,
-      });
-      tl.add(gsap.effects.heroHeadingReveal(heading));
-      tl.fromTo(
-        splitParagraph.lines,
-        {
-          yPercent: 100,
-        },
-        {
-          yPercent: 0,
-          stagger: 0.02,
-          duration: 0.4,
-        },
-        0.5,
-      );
-      tl.fromTo(
-        ".hero_footer_text",
-        {
-          yPercent: 100,
-        },
-        {
-          yPercent: 0,
-          stagger: 0.02,
-          duration: 0.4,
-        },
-        0.6,
-      );
-    }
   }
 };

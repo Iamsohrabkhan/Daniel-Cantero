@@ -143,9 +143,21 @@
   /* transform: translateY(-310%); */
   display: inline-block;
 }
+.section_heading_char{
+   text-shadow:
+    0px 1em 0px #adabaa,
+    0px 2em 0px #adabaa;
+}
+.stats_chars {
+  text-shadow: 0px 1em 0px #dedede;
+}
 .section_heading_line2 .section_heading_char {
-  transform: translateY(310%);
+  /* transform: translateY(310%); */
   will-change: "transform";
+}
+.section_heading_line2-mask{
+  /* overflow: visible !important;
+  background-color: red; */
 }
 .hero_description_line {
   opacity: 0;
@@ -193,6 +205,10 @@
     );
 
   transform-origin: 50% 50% 0px;
+}
+
+.stats_lines {
+  overflow-y: clip;
 }
 .footer_mask {
   mask:

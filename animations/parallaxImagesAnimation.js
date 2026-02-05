@@ -51,21 +51,27 @@ const projectAnimation = () => {
         autoSplit: true,
         charsClass: "project_heading_char",
       });
+
       gsap.fromTo(
         curr.querySelectorAll(".project_heading_char"),
         {
-          y: "-340%",
+          y: "-3em",
           rotateX: -24,
         },
         {
-          y: "0%",
+          y: "0em",
           rotateX: 0,
           duration: 0.9,
-          stagger: 0.06,
+          stagger: {
+            each: 0.05,
+            ease: "slow(0.1,0.7,true)",
+          },
           ease: "secondary",
           scrollTrigger: {
             trigger: curr,
             start: "top 80%",
+            // toggleActions: "play reverse play reverse",
+            // markers: true,
           },
         },
       );

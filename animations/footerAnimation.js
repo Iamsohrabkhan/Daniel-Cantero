@@ -16,29 +16,29 @@ const footerAnimations = () => {
   tl.fromTo(
     ".footer_line1 .footer_char",
     {
-      y: "-340%",
+      y: "-3em",
       rotateX: -24,
     },
     {
-      y: "0%",
+      y: "0em",
       rotateX: 0,
       ease: "secondary",
-      duration: 0.8,
-      stagger: 0.02,
+      duration: 1.2,
+      stagger: 0.05,
     },
   );
   tl.fromTo(
     ".footer_line2 .footer_char",
     {
-      y: "-340%",
+      y: "-3em",
       rotateX: -24,
     },
     {
-      y: "0%",
+      y: "0em",
       rotateX: 0,
       ease: "secondary",
-      duration: 0.8,
-      stagger: 0.02,
+      duration: 1.2,
+      stagger: 0.05,
     },
     0.2,
   );

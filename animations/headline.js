@@ -14,6 +14,9 @@ const sectionHeaderAnimation = () => {
         scrollTrigger: {
           trigger: heading,
           start: "top 80%",
+          end: "bottom top",
+          // toggleActions: "play reverse play reverse",
+          // markers: true,
         },
       });
 
@@ -22,14 +25,15 @@ const sectionHeaderAnimation = () => {
           ".section_heading_line1 .section_heading_char",
         ),
         {
-          y: "-350%",
+          y: "-3em",
           rotateX: -24,
         },
         {
-          y: "0%",
+          y: "0em",
           rotateX: 0,
-          duration: 0.9,
-          stagger: 0.06,
+        
+          duration: 1, // letterDuration from Framer
+          stagger: 0.045, // letterDelay from Framer
           ease: "secondary",
         },
       );
@@ -39,14 +43,15 @@ const sectionHeaderAnimation = () => {
           ".section_heading_line2 .section_heading_char",
         ),
         {
-          y: "310%",
+          y: "1em",
           rotateX: -24,
         },
         {
-          y: "0%",
+          y: "-2em",
           rotateX: 0,
-          duration: 1,
-          stagger: 0.06,
+         
+          duration: 1, // letterDuration from Framer
+          stagger: 0.045, // letterDelay from Framer
           ease: "secondary",
         },
         "<",

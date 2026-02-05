@@ -182,13 +182,16 @@ const archieveMarqueeAnimations = () => {
       },
     });
     const letters = document.querySelectorAll(".archieve_text .arc_text");
+    letters.forEach((letter, index) => {
+      // Randomly choose direction: 1 for positive, -1 for negative (matching Framer's logic)
+      const direction = Math.random() > 0.5 ? 1 : -1;
 
-    gsap.set(".arc_text", {
-      yPercent: "random(-200,200),",
-      rotation: "random(-30,30)",
-      // opacity:0
+      gsap.set(letter, {
+        y: direction * 80, // animationDistance from Framer (default 20)
+        opacity: 0,
+      });
     });
-    letters.forEach((letter) => {
+    letters.forEach((letter, index) => {
       ScrollTrigger.create({
         trigger: ".archieve_container", // or scroll parent
         start: "top top",
@@ -199,10 +202,10 @@ const archieveMarqueeAnimations = () => {
           const viewportWidth = window.innerWidth;
 
           if (rect.left >= 0 && rect.right <= viewportWidth) {
-            letter.style.transition = `transform 0.6s cubic-bezier(0.2, 0.8, 0, 1) 0.05s`;
+            letter.style.transition = `all 0.5s cubic-bezier(0.2, 0.8, 0, 1) 0.05s`;
 
             letter.style.transform = "translateY(0%)";
-            // letter.style.opacity = 1;
+            letter.style.opacity = 1;
           } else {
             // letter.style.color = ""; // reset
           }
@@ -211,3 +214,14 @@ const archieveMarqueeAnimations = () => {
     });
   }
 };
+
+const archieveDetail = () => {
+
+
+  if (!detailPage) return;
+
+  initLenis({
+    infinite: true,
+  });
+};
+
