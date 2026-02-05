@@ -6,7 +6,7 @@ CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "M0,0 C0.6,0.4 0,1 1,1");
 const detailPage = document.querySelector(".archieve_detail_image_wrapper");
 const lenis = new Lenis({
-  infinite: detailPage ? true : false,
+  infinite: detailPage && innerWidth >= 478 ? true : false,
 });
 lenis.on("scroll", ScrollTrigger.update);
 
@@ -46,6 +46,5 @@ document.addEventListener("DOMContentLoaded", () => {
   workDetailAnimation();
   archieveDetail();
 
- 
   studioAnimations();
 });

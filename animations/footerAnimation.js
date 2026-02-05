@@ -44,6 +44,8 @@ const footerAnimations = () => {
   );
 
   // ===== Footer background reveal =====
+ 
+  
   if (footerBg) {
     ScrollTrigger.create({
       trigger: footerBg,

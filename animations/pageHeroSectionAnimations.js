@@ -3,7 +3,7 @@ const pageHeroAnimations = () => {
     ".work_hero_section",
     ".work_detail_hero",
   ]);
-  
+
   const isAnimate = document.querySelectorAll("[is-animate='no']");
   if (!isAnimate.length) {
     if (hero.length) {
@@ -33,12 +33,10 @@ const pageHeroAnimations = () => {
   }
 };
 
-
-
-
 const pageHeroLoadAnimations = () => {
   const hero = document.querySelector(".work_hero_section");
-    const firstEl= document.querySelector('[data-animate="fadein"]')
+  const firstEl = document.querySelector('[data-animate="fadein"]');
+  const gridColumnLines = document.querySelectorAll(".grid_column_line");
 
   if (hero) {
     const heading = hero.querySelector(".section_hero_heading");
@@ -82,8 +80,25 @@ const pageHeroLoadAnimations = () => {
         0.6,
       );
       if (firstEl) {
-        tl.add(gsap.effects.fade(firstEl))
-        
+        tl.add(gsap.effects.fade(firstEl));
+      }
+      if (gridColumnLines.length) {
+        console.log("grid lines exist", gridColumnLines[2]);
+
+        tl.fromTo(
+          gridColumnLines,
+          {
+            scaleY: 0,
+            opacity: 0,
+            transformOrigin: "0% 0%",
+          },
+          {
+            scaleY: 1,
+            opacity: 0.1,
+            duration: 1.2,
+            stagger: 0.04,
+          },
+        );
       }
     }
   }
