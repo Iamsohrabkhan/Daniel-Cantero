@@ -8,6 +8,8 @@ const workDetailAnimation = () => {
 
   if (hero) {
     const mainHeading = hero.querySelector(".work_detail_main_heading");
+    const grid= gsap.utils.toArray(".work_detail_grid_3")
+    gsap.effects["slide-up"](grid)
     tl.set(mainHeading, {
       opacity: 1,
     });

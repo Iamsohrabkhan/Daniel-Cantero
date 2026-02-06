@@ -3,6 +3,7 @@
     const statsSection = document.querySelector(".stats_section");
     const cardsNumbers = gsap.utils.toArray(".stats_number");
     const cards = gsap.utils.toArray(".stats_card");
+    const clientCard=gsap.utils.toArray(".client_card")
     const studioAbout = gsap.utils.toArray(".studio_about_section");
 
     if (!statsSection) return;
@@ -14,6 +15,7 @@
         y: 30,
       });
     });
+    gsap.effects.fade(clientCard)
 
     // Animate each stats number separately
     cardsNumbers.forEach((number) => {

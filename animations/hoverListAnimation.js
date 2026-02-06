@@ -53,7 +53,7 @@ const hoverListAnimations = () => {
         c.classList.remove("clip-transition");
       });
 
-      gsap.to(mouseFollowImage, {
+      gsap.set(mouseFollowImage, {
         scale: 1,
         duration: 0.3,
         overwrite: "auto",
