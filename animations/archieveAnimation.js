@@ -187,7 +187,7 @@ const archieveMarqueeAnimations = () => {
       const direction = Math.random() > 0.5 ? 1 : -1;
 
       gsap.set(letter, {
-        y: direction * 80, // animationDistance from Framer (default 20)
+        y: direction * 150, // animationDistance from Framer (default 20)
         opacity: 0,
       });
     });

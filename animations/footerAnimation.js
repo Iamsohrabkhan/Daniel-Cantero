@@ -15,7 +15,7 @@ const footerAnimations = () => {
   const list = gsap.utils.toArray([
     ".footer_list",
     ".footer_cta",
-    ".btn",
+    "footer .btn",
     // ".footer_copyright > *",
   ]);
   

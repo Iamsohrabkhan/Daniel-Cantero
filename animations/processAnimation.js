@@ -1,25 +1,37 @@
 const processAnimation = () => {
   const cards = gsap.utils.toArray(".process_card");
   if (cards.length) {
-    cards.forEach((card, index) => {
-      gsap.set(card, {
-        rotateY: -56,
-        transformOrigin: "left top",
-        y: index === 0 ? 250 : index === 1 ? 300 : 300,
-        willChange: "transform",
-      });
+    const mm = gsap.matchMedia();
 
-      gsap.to(card, {
-        rotateY: 0,
-        y: index * 30,
-        scrollTrigger: {
-          trigger: card,
-          scrub: 1,
-          top: "top bottom",
-          end: "top center",
-          // markers: true,
-        },
-      });
-    });
+    mm.add(
+      {
+        isDesktop: "(min-width: 768px)",
+        isMobile: "(max-width: 767px)",
+      },
+      (context) => {
+        const { isDesktop, isMobile } = context.conditions;
+
+        cards.forEach((card, index) => {
+          gsap.set(card, {
+            rotateY: -56,
+            transformOrigin: "left top",
+            y: isDesktop ? (index === 0 ? 400 : index === 1 ? 500 : 600) : 300, // fixed value for all indexes on mobile
+            willChange: "transform",
+          });
+
+          gsap.to(card, {
+            rotateY: 0,
+            y: isDesktop ? index * 30 : 0,
+            scrollTrigger: {
+              trigger: card,
+              scrub: 1,
+              start: "top bottom",
+              end: "top center",
+              // markers: true,
+            },
+          });
+        });
+      },
+    );
   }
 };

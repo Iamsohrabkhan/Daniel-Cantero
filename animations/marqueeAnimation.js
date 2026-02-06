@@ -98,18 +98,22 @@ function initMarqueeAnimations() {
 
   gsap.ticker.lagSmoothing(0);
 
-  gsap.from(".marquee_image", {
-    opacity: 1,
-    // y: 150,
-    duration: 2,
-    ease: "secondary",
-
-    stagger: 0.2,
-    scrollTrigger: {
-      trigger: ".marquee_image",
-      top: "top 80%",
-      end: "bottom top",
-      // markers: true,
-    },
-  });
+  const marqueeImage=document.querySelectorAll(".marquee_image")
+  if (marqueeImage.entries.length) {
+    gsap.from(".marquee_image", {
+      opacity: 1,
+      // y: 150,
+      duration: 2,
+      ease: "secondary",
+  
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: ".marquee_image",
+        top: "top 80%",
+        end: "bottom top",
+        // markers: true,
+      },
+    });
+    
+  }
 }

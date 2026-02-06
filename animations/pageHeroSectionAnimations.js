@@ -35,10 +35,17 @@ const pageHeroAnimations = () => {
 
 const pageHeroLoadAnimations = () => {
   const hero = document.querySelector(".work_hero_section");
-  const firstEl = document.querySelector('[data-animate="fadein"]');
+  const fadeInEl = document.querySelectorAll('[data-animate="fadein"]');
   const gridColumnLines = document.querySelectorAll(".grid_column_line");
 
   if (hero) {
+    fadeInEl.forEach((curr, i) => {
+      if (i !== 0) {
+        gsap.set(curr, {
+          opacity: 1,
+        });
+      }
+    });
     const heading = hero.querySelector(".section_hero_heading");
     const paragraph = hero.querySelector(".work_hero_paragraph");
     const tl = gsap.timeline();
@@ -79,12 +86,10 @@ const pageHeroLoadAnimations = () => {
         },
         0.6,
       );
-      if (firstEl) {
-        tl.add(gsap.effects.fade(firstEl));
+      if (fadeInEl) {
+        tl.add(gsap.effects.fade(fadeInEl[0]));
       }
       if (gridColumnLines.length) {
-
-        
         tl.fromTo(
           gridColumnLines,
           {
