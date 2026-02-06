@@ -12,6 +12,13 @@ const footerAnimations = () => {
     charsClass: "footer_char",
   });
   const tl = gsap.timeline({ paused: true });
+  const list = gsap.utils.toArray([
+    ".footer_list",
+    ".footer_cta",
+    ".btn",
+    // ".footer_copyright > *",
+  ]);
+  
 
   tl.fromTo(
     ".footer_line1 .footer_char",
@@ -42,6 +49,8 @@ const footerAnimations = () => {
     },
     0.2,
   );
+  tl.add(gsap.effects.fade(list),0);
+  // tl.add(gsap.effects.fade(copyrightText));
 
   // ===== Footer background reveal =====
 

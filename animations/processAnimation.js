@@ -3,9 +3,9 @@ const processAnimation = () => {
   if (cards.length) {
     cards.forEach((card, index) => {
       gsap.set(card, {
-        rotateY: -30,
+        rotateY: -56,
         transformOrigin: "left top",
-        y: index === 0 ? 200 : index === 1 ? 350 :450,
+        y: index === 0 ? 250 : index === 1 ? 300 : 300,
         willChange: "transform",
       });
 
@@ -16,7 +16,8 @@ const processAnimation = () => {
           trigger: card,
           scrub: 1,
           top: "top bottom",
-          end: "top 40%",
+          end: "top center",
+          // markers: true,
         },
       });
     });

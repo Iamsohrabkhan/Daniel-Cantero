@@ -47,4 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
   archieveDetail();
 
   studioAnimations();
+
+  // error
+ 
+  ErrorPageAnimations();
 });
