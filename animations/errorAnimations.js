@@ -32,53 +32,54 @@ const ErrorPageAnimations = () => {
   }
 
   const textHeading = document.querySelectorAll(".erro_page_heading");
+  if (textHeading.length) {
+    const SplitHeading = SplitText.create(textHeading, {
+      type: "lines,chars",
+      mask: "lines",
+      charsClass: "error_char",
+      linesClass: "error_line++",
+      onSplit: () => {},
+    });
 
-  const SplitHeading = SplitText.create(textHeading, {
-    type: "lines,chars",
-    mask: "lines",
-    charsClass: "error_char",
-    linesClass: "error_line++",
-    onSplit: () => {},
-  });
-
-  gsap.fromTo(
-    [
-      textHeading[0].querySelectorAll(".error_line1 .error_char"),
-      textHeading[2].querySelectorAll(".error_line1 .error_char"),
-    ],
-    {
-      y: "0em",
-      rotateY: -28,
-    },
-    {
-      y: "-1.6em",
-      duration: 1,
-      ease: "back.inOut",
-      stagger: 0.06,
-      yoyo: true,
-      repeat: -1,
-      repeatDelay: 1,
-      rotateY: 0,
-    },
-  );
-  gsap.fromTo(
-    [
-      textHeading[1].querySelectorAll(".error_line1 .error_char"),
-      textHeading[3].querySelectorAll(".error_line1 .error_char"),
-    ],
-    {
-      y: "-1.6em",
-      rotateY: -28,
-    },
-    {
-      y: "0em",
-      duration: 1,
-      ease: "back.inOut",
-      stagger: 0.06,
-      yoyo: true,
-      repeat: -1,
-      repeatDelay: 1,
-      rotateY: 0,
-    },
-  );
+    gsap.fromTo(
+      [
+        textHeading[0].querySelectorAll(".error_line1 .error_char"),
+        textHeading[2].querySelectorAll(".error_line1 .error_char"),
+      ],
+      {
+        y: "0em",
+        rotateY: -28,
+      },
+      {
+        y: "-1.6em",
+        duration: 1,
+        ease: "back.inOut",
+        stagger: 0.06,
+        yoyo: true,
+        repeat: -1,
+        repeatDelay: 1,
+        rotateY: 0,
+      },
+    );
+    gsap.fromTo(
+      [
+        textHeading[1].querySelectorAll(".error_line1 .error_char"),
+        textHeading[3].querySelectorAll(".error_line1 .error_char"),
+      ],
+      {
+        y: "-1.6em",
+        rotateY: -28,
+      },
+      {
+        y: "0em",
+        duration: 1,
+        ease: "back.inOut",
+        stagger: 0.06,
+        yoyo: true,
+        repeat: -1,
+        repeatDelay: 1,
+        rotateY: 0,
+      },
+    );
+  }
 };

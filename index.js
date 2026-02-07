@@ -41,6 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   footerAnimations();
 
+  // archieve page grid animations
+  archieveHoverAnimations();
+
   // work section animations
   initMarqueeAnimations();
   workDetailAnimation();
@@ -49,6 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
   studioAnimations();
 
   // error
- 
+
   ErrorPageAnimations();
 });

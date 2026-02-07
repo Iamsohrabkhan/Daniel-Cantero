@@ -263,3 +263,108 @@ const archieveDetail = () => {
     });
   }
 };
+
+const archieveHoverAnimations = () => {
+  const bento = document.querySelector(".grid_bento");
+  const imgContainer = document.querySelector(".bento_images_reveal");
+  const images = document.querySelectorAll(".bento_img");
+  const cells = document.querySelectorAll(".grid_row");
+  const archieveContainer = document.querySelector(".archieve_posts");
+  let mm = gsap.matchMedia();
+
+  if (archieveContainer) {
+    mm.add("(min-width: 768px)", () => {
+      let currentIndex = -1; // Track which cell we're currently on
+
+      const xTo = gsap.quickTo(imgContainer, "x", {
+        duration: 0.8,
+        ease: "power3",
+      });
+      const yTo = gsap.quickTo(imgContainer, "y", {
+        duration: 0.8,
+        ease: "power3",
+      });
+
+      window.addEventListener("mousemove", ({ clientX, clientY }) => {
+        xTo(clientX + 20);
+        yTo(clientY - imgContainer.getBoundingClientRect().height / 2);
+      });
+
+      gsap.set(bento, {
+        zIndex: 1,
+        pointerEvents: "all",
+      });
+
+      gsap.set(imgContainer, {
+        scale: 0,
+      });
+
+      // Initially set all images to clip-50
+      images.forEach((img) => {
+        img.classList.add("clip-50");
+        img.classList.remove("clip-0");
+      });
+
+      bento.addEventListener("mouseenter", () => {
+        gsap.to(imgContainer, {
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+
+      bento.addEventListener("mouseleave", () => {
+        gsap.to(imgContainer, {
+          scale: 0,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+        // Reset all images when leaving the bento area
+        images.forEach((img) => {
+          img.classList.remove("clip-0");
+          img.classList.add("clip-50");
+        });
+        currentIndex = -1; // Reset current index
+      });
+
+      cells.forEach((cell, index) => {
+        cell.addEventListener("mouseenter", () => {
+          if (currentIndex === -1) {
+            // First hover - reveal all images from 0 to current index
+            for (let i = 0; i <= index; i++) {
+              if (images[i]) {
+                images[i].classList.remove("clip-50");
+                images[i].classList.add("clip-0");
+              }
+            }
+          } else if (index > currentIndex) {
+            // Moving forward - reveal new images from currentIndex+1 to index
+            for (let i = currentIndex + 1; i <= index; i++) {
+              if (images[i]) {
+                images[i].classList.remove("clip-50");
+                images[i].classList.add("clip-0");
+              }
+            }
+          } else if (index < currentIndex) {
+            // Moving backward - hide images from index+1 to currentIndex
+            for (let i = index + 1; i <= currentIndex; i++) {
+              if (images[i]) {
+                images[i].classList.remove("clip-0");
+                images[i].classList.add("clip-50");
+              }
+            }
+            // Ensure all images from 0 to index are visible
+            for (let i = 0; i <= index; i++) {
+              if (images[i]) {
+                images[i].classList.remove("clip-50");
+                images[i].classList.add("clip-0");
+              }
+            }
+          }
+
+          currentIndex = index; // Update current index
+        });
+      });
+    });
+  }
+};
