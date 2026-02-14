@@ -30,7 +30,10 @@ const slideIn = () => {
   const listGridWrapperSlideLeft = document.querySelectorAll(".list_grid");
   if (listGridWrapperSlideLeft.length) {
     listGridWrapperSlideLeft.forEach((curr, i) => {
-      gsap.effects["slide-left"]([curr, curr.nextSibling], {
+      gsap.effects["slide-left"](curr, {
+        delay: i * 0.04,
+      });
+      gsap.effects["slide-left"](curr.nextSibling, {
         delay: i * 0.04,
       });
     });

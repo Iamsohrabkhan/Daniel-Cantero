@@ -1,15 +1,21 @@
 // import Lenis from "lenis";
 
-gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
+gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, Draggable);
 
 CustomEase.create("primary", "0.8,0.2,0,1");
-CustomEase.create("secondary", "M0,0 C0.6,0.4 0,1 1,1");
+CustomEase.create("secondary", "0.6, 0.4, 0, 1");
+CustomEase.create("tertially", "0, 0.2, 0, 1");
 const detailPage = document.querySelector(".archieve_detail_image_wrapper");
 const lenis = new Lenis({
   infinite: detailPage && innerWidth >= 478 ? true : false,
 });
 lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);
+  parallaxImagesAnimation()
+});
 
+gsap.ticker.lagSmoothing(0);
 if (document.readyState === "complete") {
   heroAnimation();
   pageHeroLoadAnimations();

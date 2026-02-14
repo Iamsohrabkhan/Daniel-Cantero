@@ -8,6 +8,9 @@ const archieveMarqueeAnimations = () => {
   );
   if (stickyArchieve) {
     if (archieveMarquee.length < 2) return;
+    // stickyArchieve.classList.add("sticky_mask");
+
+    // Create the animation but don't let it play automatically
 
     // initial states
 
@@ -16,6 +19,10 @@ const archieveMarqueeAnimations = () => {
     });
     gsap.set(".archieve_text_animation_wrapper", {
       scale: 0,
+    });
+    gsap.set(".archieve_list", {
+      yPercent: 100,
+      opacity: 0,
     });
     archieveImageParallax.forEach((curr, index) => {
       if (index === 0) {
@@ -45,6 +52,7 @@ const archieveMarqueeAnimations = () => {
         },
         onLeave: () => {
           console.log("left");
+
           gsap.to(".archieve_text_animation_wrapper", {
             scale: 1,
             // opacity: 1,
@@ -52,6 +60,11 @@ const archieveMarqueeAnimations = () => {
             delay: 0.2,
             onComplete: () => {
               grid.create();
+              stickyArchieve.classList.add("sticky_mask");
+              gsap.to(".archieve_list", {
+                yPercent: 0,
+                opacity: 1,
+              });
             },
           });
         },
@@ -62,7 +75,13 @@ const archieveMarqueeAnimations = () => {
             // opacity: 0,
             duration: 0.4,
             onComplete: () => {
+              gsap.to(".archieve_list", {
+                yPercent: 100,
+                opacity: 0,
+                duration: 0.15,
+              });
               grid.destroy();
+              stickyArchieve.classList.remove("sticky_mask");
             },
           });
         },
@@ -83,7 +102,16 @@ const archieveMarqueeAnimations = () => {
       },
       0,
     );
-
+    const overlay = gsap.quickTo(".archeive_overlay", "opacity", {
+      duration: 0.2,
+    });
+    const q = gsap.utils.mapRange(
+      -archieveMarquee[1].getBoundingClientRect().width / 3,
+      0,
+      0,
+      0.8,
+    );
+    const clamp = gsap.utils.clamp(0, 0.8);
     tl.to(
       archieveMarquee[1],
       {
@@ -95,16 +123,10 @@ const archieveMarqueeAnimations = () => {
         onStart: () => {},
         onUpdate: () => {
           const currentX = gsap.getProperty(archieveMarquee[1], "x");
-          // use currentX here
-          if (currentX === 0) {
-            if (!stickyArchieve.classList.contains("sticky_mask")) {
-              stickyArchieve.classList.add("sticky_mask");
-            }
-          } else {
-            if (stickyArchieve.classList.contains("sticky_mask")) {
-              stickyArchieve.classList.remove("sticky_mask");
-            }
-          }
+          const opacity = q(currentX);
+          const opacityClamp = clamp(opacity);
+          // console.log("🚀 ~ archieveMarqueeAnimations ~ currentX:", opacityClamp);
+          overlay(opacityClamp);
         },
       },
       0,
