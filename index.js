@@ -1,6 +1,6 @@
 // import Lenis from "lenis";
 
-gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, Draggable);
+gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
 
 CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
