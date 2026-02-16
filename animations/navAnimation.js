@@ -58,3 +58,43 @@ const navAnimations = () => {
     }
   });
 };
+
+const logoAnimation = () => {
+  const logo = document.querySelector(".logo");
+  if (!logo) return;
+
+  const wordWrapper = logo.querySelectorAll(".logo_word-mask");
+  if (!wordWrapper.length) return;
+
+  const toggleLogoState = (state) => {
+    if (state === "initial") {
+      wordWrapper.forEach((word) => word.classList.remove("reveal"));
+    } else if (state === "reveal") {
+      wordWrapper.forEach((word) => word.classList.add("reveal"));
+    } else {
+      console.warn("Unknown state:", state);
+    }
+  };
+
+  return toggleLogoState;
+};
+
+const navLogoAnimation = () => {
+  if (document.querySelector(".home")) {
+    const toggleLogoState = logoAnimation();
+    if (!toggleLogoState) return;
+
+    ScrollTrigger.create({
+      trigger: ".about_section",
+      start: "top top",
+      end: "bottom bottom",
+      // markers: true,
+      onEnter: () => {
+        toggleLogoState("reveal");
+      },
+      onLeaveBack: () => {
+        toggleLogoState("initial");
+      },
+    });
+  }
+};

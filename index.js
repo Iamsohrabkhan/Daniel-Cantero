@@ -12,7 +12,7 @@ const lenis = new Lenis({
 lenis.on("scroll", ScrollTrigger.update);
 gsap.ticker.add((time) => {
   lenis.raf(time * 1000);
-  parallaxImagesAnimation()
+  parallaxImagesAnimation();
 });
 
 gsap.ticker.lagSmoothing(0);
@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // hero animations
   navAnimations();
+  navLogoAnimation();
   sectionHeaderAnimation();
   hoverListAnimations();
   projectAnimation();

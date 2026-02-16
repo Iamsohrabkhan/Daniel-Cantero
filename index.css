@@ -108,6 +108,28 @@
 .clip-0 {
   clip-path: inset(0% 0% 0% 0%);
 }
+.home {
+  .logo {
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: start;
+      gap: 2px;
+    }
+    span {
+      display: inline-block;
+    }
+    .logo_word-mask {
+      width: 10px;
+      transition: width 1.5s cubic-bezier(0.8, 0.2, 0, 1);
+      overflow: clip;
+    }
+    .logo_word-mask.reveal {
+      width: 100%;
+    }
+  }
+}
+
 .bento_img {
   transition: clip-path 0.4s ease; /* Smooth reveal animation */
 }

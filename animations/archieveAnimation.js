@@ -297,6 +297,8 @@ const archieveHoverAnimations = () => {
   if (archieveContainer) {
     mm.add("(min-width: 768px)", () => {
       let currentIndex = -1; // Track which cell we're currently on
+      let hasMovedCursor = false; // Track if cursor has moved at least once
+      let isOverBento = false; // Track if cursor is over bento
 
       const xTo = gsap.quickTo(imgContainer, "x", {
         duration: 0.8,
@@ -310,6 +312,16 @@ const archieveHoverAnimations = () => {
       window.addEventListener("mousemove", ({ clientX, clientY }) => {
         xTo(clientX + 20);
         yTo(clientY - imgContainer.getBoundingClientRect().height / 2);
+
+        // If cursor moves and is over bento, reveal the container
+        if (!hasMovedCursor && isOverBento) {
+          hasMovedCursor = true;
+          gsap.to(imgContainer, {
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
       });
 
       gsap.set(bento, {
@@ -328,14 +340,20 @@ const archieveHoverAnimations = () => {
       });
 
       bento.addEventListener("mouseenter", () => {
-        gsap.to(imgContainer, {
-          scale: 1,
-          duration: 0.3,
-          ease: "power2.out",
-        });
+        isOverBento = true;
+        // Only show if cursor has already moved
+        if (hasMovedCursor) {
+          gsap.to(imgContainer, {
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
       });
 
       bento.addEventListener("mouseleave", () => {
+        isOverBento = false;
+        hasMovedCursor = false; // Reset for next entry
         gsap.to(imgContainer, {
           scale: 0,
           duration: 0.3,
