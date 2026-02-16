@@ -37,74 +37,117 @@ const pageHeroLoadAnimations = () => {
   const hero = document.querySelector(".work_hero_section");
   const fadeInEl = document.querySelectorAll('[data-animate="fadein"]');
   const gridColumnLines = document.querySelectorAll(".grid_column_line");
+  const number = document.querySelector(".project_number_text");
 
   if (hero) {
-    fadeInEl.forEach((curr, i) => {
-      if (i !== 0) {
-        gsap.set(curr, {
+    document.fonts.ready.then(() => {
+      fadeInEl.forEach((curr, i) => {
+        if (i !== 0) {
+          gsap.set(curr, {
+            opacity: 1,
+          });
+        }
+      });
+      const heading = hero.querySelector(".section_hero_heading");
+
+      const paragraph = hero.querySelector(".work_hero_paragraph");
+      const tl = gsap.timeline();
+      const splitParagraph = SplitText.create(paragraph, {
+        type: "chars, lines",
+        mask: "lines",
+        linesClass: "section_hero_line",
+        autoSplit: true,
+        charsClass: "section_paragraph_char",
+      });
+      const numberSplit = SplitText.create(number, {
+        type: "chars, lines",
+        mask: "lines",
+        autoSplit: true,
+      });
+
+      if (heading || hero) {
+        tl.set([heading, ".work_hero_paragraph", ".hero_footer_text"], {
           opacity: 1,
         });
-      }
-    });
-    const heading = hero.querySelector(".section_hero_heading");
-    const paragraph = hero.querySelector(".work_hero_paragraph");
-    const tl = gsap.timeline();
-    const splitParagraph = SplitText.create(paragraph, {
-      type: "chars, lines",
-      mask: "lines",
-      linesClass: "section_hero_line",
-      autoSplit: true,
-      charsClass: "section_paragraph_char",
-    });
-
-    if (heading || hero) {
-      tl.set([heading, ".work_hero_paragraph", ".hero_footer_text"], {
-        opacity: 1,
-      });
-      tl.add(gsap.effects.heroHeadingReveal(heading));
-      tl.fromTo(
-        splitParagraph.lines,
-        {
-          yPercent: 100,
-        },
-        {
-          yPercent: 0,
-          stagger: 0.02,
-          duration: 0.4,
-        },
-        0.5,
-      );
-      tl.fromTo(
-        ".hero_footer_text",
-        {
-          yPercent: 100,
-        },
-        {
-          yPercent: 0,
-          stagger: 0.02,
-          duration: 0.4,
-        },
-        0.6,
-      );
-      if (fadeInEl) {
-        tl.add(gsap.effects.fade(fadeInEl[0]));
-      }
-      if (gridColumnLines.length) {
+        tl.add(gsap.effects.heroHeadingReveal(heading));
+        if (number) {
+          tl.set(
+            number,
+            {
+              opacity: 1,
+            },
+            0.4,
+          );
+          tl.from(
+            numberSplit.chars,
+            {
+              yPercent: 100,
+              stagger: 0.02,
+              duration: 1.2,
+              ease:"primary"
+            },
+            0.4,
+          );
+        }
         tl.fromTo(
-          gridColumnLines,
+          splitParagraph.lines,
           {
-            scaleY: 0,
-            opacity: 0,
-            transformOrigin: "0% 0%",
+            yPercent: 100,
           },
           {
-            scaleY: 1,
-            opacity: 0.1,
-            duration: 1.2,
-            stagger: 0.04,
+            yPercent: 0,
+            stagger: 0.02,
+            duration: 0.4,
           },
+          0.5,
         );
+        tl.fromTo(
+          ".hero_footer_text",
+          {
+            yPercent: 100,
+          },
+          {
+            yPercent: 0,
+            stagger: 0.02,
+            duration: 0.4,
+          },
+          0.6,
+        );
+        if (fadeInEl) {
+          // tl.add(gsap.effects.fade(fadeInEl[0]));
+          tl.to(
+            fadeInEl,
+            {
+              opacity: 1,
+            },
+            "<",
+          );
+        }
+        if (gridColumnLines.length) {
+          tl.fromTo(
+            gridColumnLines,
+            {
+              scaleY: 0,
+              opacity: 0,
+              transformOrigin: "0% 0%",
+            },
+            {
+              scaleY: 1,
+              opacity: 0.1,
+              duration: 1.2,
+              stagger: 0.04,
+            },
+          );
+        }
+        if (document.querySelector(".grid_row_icon")) {
+          tl.from(".grid_row_icon", {
+            opacity: 0,
+            x: -100,
+            duration: 0.7,
+            stagger: 0.02,
+          });
+        }
       }
-    }
+    });
   }
 };

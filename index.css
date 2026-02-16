@@ -197,10 +197,10 @@
   display: inline-block;
 }
 
-.pricing_container {
+/* .pricing_container {
   transform-style: preserve-3d;
   perspective: 1200px;
-}
+} */
 
 .archieve_text {
   max-width: max-content;
@@ -285,6 +285,7 @@
 .work_detail_hero_list_text,
 .archieve_detail_paragraph,
 .archieve_detail_heading,
+.project_number_text,
 [data-animate="fadein"] {
   opacity: 0;
 }

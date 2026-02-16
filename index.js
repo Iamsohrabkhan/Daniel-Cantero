@@ -4,7 +4,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, Draggable);
 
 CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
-CustomEase.create("tertially", "0, 0.2, 0, 1");
+CustomEase.create("tertially", "0.6, 0.2, 0, 1");
 const detailPage = document.querySelector(".archieve_detail_image_wrapper");
 const lenis = new Lenis({
   infinite: detailPage && innerWidth >= 478 ? true : false,
@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
   archieveHoverAnimations();
 
   // work section animations
-  initMarqueeAnimations();
   workDetailAnimation();
   archieveDetail();
 

@@ -18,8 +18,8 @@ const navAnimations = () => {
     ".navbar_menu_lists",
     {
       clipPath: "inset(0% 0% 0% 0%)",
-      duration: 1.2,
-      ease: "power4.inOut",
+      duration: 1,
+      ease: "tertially",
     },
     0,
   );

@@ -22,20 +22,20 @@ if (faqs.length) {
 
         gsap.to(activeAnswer, {
           height: 0,
-          duration: 0.4,
-          ease: "power2.out",
+          duration: 0.5,
+          ease: "primary",
         });
 
         gsap.to(activeFaq, {
           paddingBottom: 0,
-          duration: 0.4,
-          ease: "power2.out",
+          duration: 0.5,
+          ease: "primary",
         });
 
         gsap.to(activeIcon, {
           rotate: 0,
-          duration: 0.3,
-          ease: "power2.out",
+          duration: 0.5,
+          ease: "primary",
         });
       }
 
@@ -44,20 +44,20 @@ if (faqs.length) {
       // Toggle current FAQ
       gsap.to(answer, {
         height: isOpen ? 0 : "auto",
-        duration: 0.4,
-        ease: "power2.out",
+        duration: 0.5,
+        ease: "primary",
       });
 
       gsap.to(faq, {
         paddingBottom: isOpen ? 0 : 24,
-        duration: 0.4,
-        ease: "power2.out",
+        duration: 0.5,
+        ease: "primary",
       });
 
       gsap.to(icon, {
         rotate: isOpen ? 0 : 180,
-        duration: 0.3,
-        ease: "power2.out",
+        duration: 0.5,
+        ease: "primary",
       });
 
       activeFaq = isOpen ? null : faq;

@@ -13,8 +13,9 @@ const processAnimation = () => {
 
         cards.forEach((card, index) => {
           gsap.set(card, {
-            rotateY: -56,
-            transformOrigin: "left top",
+            rotateY: isDesktop ? -72 : -56,
+            // perspective: 1200,
+            // transformOrigin: "left  top",
             y: isDesktop ? (index === 0 ? 500 : index === 1 ? 700 : 700) : 300, // fixed value for all indexes on mobile
             willChange: "transform",
           });
@@ -26,7 +27,7 @@ const processAnimation = () => {
               trigger: ".process_container",
               scrub: 1,
               start: "top bottom",
-              end: "top top",
+              end: "top top-=200px",
               // markers: true,
             },
           });
@@ -35,6 +36,94 @@ const processAnimation = () => {
     );
 
     // reveal image process
+
+    const headings = gsap.utils.toArray(".process_card_heading");
+
+    headings.forEach((heading) => {
+      const splitHeading = SplitText.create(heading, {
+        type: "chars, lines",
+        mask: "lines",
+        autoSplit: true,
+        linesClass: "section_heading_line++",
+        charsClass: "section_heading_char",
+        onSplit: () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: heading,
+              start: "top 90%",
+              end: "bottom top",
+              // toggleActions: "play reverse play reverse",
+              // markers: true,
+            },
+          });
+          let isRefreshing = false;
+
+          const refresh = () => {
+            if (!isRefreshing) return;
+            tl.scrollTrigger.refresh();
+          };
+
+          ScrollTrigger.create({
+            trigger: ".process_container",
+            start: "top bottom",
+            end: "bottom top",
+            onEnter: () => {
+              isRefreshing = true;
+              gsap.ticker.add(refresh);
+            },
+            onLeave: () => {
+              isRefreshing = false;
+              gsap.ticker.remove(refresh);
+            },
+            onEnterBack: () => {
+              isRefreshing = false;
+              gsap.ticker.add(refresh);
+            },
+            onLeaveBack: () => {
+              isRefreshing = false;
+              gsap.ticker.remove(refresh);
+            },
+          });
+
+          tl.fromTo(
+            heading.querySelectorAll(
+              ".section_heading_line1 .section_heading_char",
+            ),
+            {
+              y: "-5em",
+              rotateX: -24,
+            },
+            {
+              y: "0em",
+              rotateX: 0,
+
+              duration: 1,
+              stagger: 0.045,
+              ease: "secondary",
+            },
+          );
+
+          tl.fromTo(
+            heading.querySelectorAll(
+              ".section_heading_line2 .section_heading_char",
+            ),
+            {
+              y: "1em",
+              rotateX: -24,
+            },
+            {
+              y: "-4em",
+              rotateX: 0,
+
+              duration: 1, // letterDuration from Framer
+              stagger: 0.045, // letterDelay from Framer
+              ease: "secondary",
+            },
+            "<",
+          );
+        },
+      });
+    });
 
     const imageWrapper = gsap.utils.toArray(".process_reveal_image_wrapper");
     imageWrapper.forEach((curr) => {
