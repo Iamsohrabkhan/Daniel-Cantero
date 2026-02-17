@@ -13,7 +13,7 @@ const processAnimation = () => {
 
         cards.forEach((card, index) => {
           gsap.set(card, {
-            rotateY: isDesktop ? -72 : -56,
+            rotateY: -56,
             // perspective: 1200,
             // transformOrigin: "left  top",
             y: isDesktop ? (index === 0 ? 500 : index === 1 ? 700 : 700) : 300, // fixed value for all indexes on mobile
@@ -24,11 +24,11 @@ const processAnimation = () => {
             rotateY: 0,
             y: isDesktop ? (index === 0 ? 0 : index === 1 ? 25 : 45) : 0,
             scrollTrigger: {
-              trigger: ".process_container",
+              trigger: isDesktop ? ".process_top" : card,
               scrub: 1,
               start: "top bottom",
-              end: "top top-=200px",
-              // markers: true,
+              end: "top top",
+              markers: true,
             },
           });
         });
