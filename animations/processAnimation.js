@@ -15,8 +15,9 @@ const processAnimation = () => {
           gsap.set(card, {
             rotateY: -56,
             // perspective: 1200,
-            // transformOrigin: "left  top",
-            y: isDesktop ? (index === 0 ? 500 : index === 1 ? 700 : 700) : 300, // fixed value for all indexes on mobile
+            // transformOrigin: "left top",
+            y: isDesktop ? (index === 0 ? 300 : index === 1 ? 500 : 500) : 300, // fixed value for all indexes on mobile
+            transform:"perspective(1200px)",
             willChange: "transform",
           });
 
@@ -27,8 +28,9 @@ const processAnimation = () => {
               trigger: isDesktop ? ".process_top" : card,
               scrub: 1,
               start: "top bottom",
-              end: "top top",
-              markers: true,
+              end: isDesktop ? "top top":"top center",
+              // markers: true,
+              
             },
           });
         });
