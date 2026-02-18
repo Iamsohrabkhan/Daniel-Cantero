@@ -6,8 +6,11 @@ function initMarqueeAnimations() {
   }
 
   // Device detection
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-  
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    ) || window.innerWidth < 768;
+
   let value = 0;
   const autoScrollSpeed = -0.05;
   const marqueeImages = document.querySelectorAll(".marquee_image");
@@ -36,8 +39,8 @@ function initMarqueeAnimations() {
   // Adaptive settings based on device - REDUCED SENSITIVITY
   const smoothness = isMobile ? 0.15 : 0.12;
   const dragSensitivity = isMobile ? 0.035 : 0.03; // REDUCED from 0.08/0.06 - less distance per swipe
-  const releaseDamping = isMobile ? 0.88 : 0.90; // REDUCED from 0.95/0.96 - faster deceleration
-  
+  const releaseDamping = isMobile ? 0.88 : 0.9; // REDUCED from 0.95/0.96 - faster deceleration
+
   // Professional skew settings - responsive and smooth
   const maxSkew = isMobile ? 12 : 20;
   const skewSmoothness = isMobile ? 0.18 : 0.2;
@@ -53,16 +56,16 @@ function initMarqueeAnimations() {
   // Calculate smooth average velocity with recent bias
   const getSmoothedVelocity = () => {
     if (velocityHistory.length === 0) return 0;
-    
+
     let weightedSum = 0;
     let weightSum = 0;
-    
+
     velocityHistory.forEach((v, index) => {
       const weight = index + 1;
       weightedSum += v * weight;
       weightSum += weight;
     });
-    
+
     return weightedSum / weightSum;
   };
 
@@ -78,7 +81,7 @@ function initMarqueeAnimations() {
   const calculateTargetSkew = (rawVelocity) => {
     const smoothVelocity = getSmoothedVelocity();
     const velocityMagnitude = Math.abs(smoothVelocity);
-    
+
     // If velocity is minimal, return zero
     if (velocityMagnitude < minVelocityForSkew) {
       return 0;
@@ -86,35 +89,36 @@ function initMarqueeAnimations() {
 
     // Direct velocity mapping with power curve
     let skewAmount = smoothVelocity * velocityToSkewRatio;
-    
+
     // Apply a subtle ease-out curve
     const normalizedSkew = skewAmount / maxSkew;
-    const easedNormalized = normalizedSkew > 0 
-      ? Math.pow(Math.min(normalizedSkew, 1), 0.7) 
-      : -Math.pow(Math.min(Math.abs(normalizedSkew), 1), 0.7);
-    
+    const easedNormalized =
+      normalizedSkew > 0
+        ? Math.pow(Math.min(normalizedSkew, 1), 0.7)
+        : -Math.pow(Math.min(Math.abs(normalizedSkew), 1), 0.7);
+
     skewAmount = easedNormalized * maxSkew;
-    
+
     // Clamp to max values
     skewAmount = Math.max(-maxSkew, Math.min(maxSkew, skewAmount));
-    
+
     return skewAmount;
   };
 
   // Apply skew with smooth interpolation
   const applySkew = () => {
     targetSkew = calculateTargetSkew(instantVelocity);
-    
+
     // Smooth interpolation towards target
     const interpolationSpeed = isDragging ? skewSmoothness : skewReturnSpeed;
     currentSkew += (targetSkew - currentSkew) * interpolationSpeed;
-    
+
     // Apply with hardware acceleration
     marqueeImages.forEach((img) => {
       gsap.set(img, {
         skewX: currentSkew,
         force3D: true,
-        transformOrigin: "center center"
+        transformOrigin: "center center",
       });
     });
   };
@@ -139,8 +143,11 @@ function initMarqueeAnimations() {
 
     currentPosition = position;
     const deltaX = currentPosition - lastPosition;
-    
-    if (!hasDragged && Math.abs(currentPosition - dragStartPosition) > minDragDistance) {
+
+    if (
+      !hasDragged &&
+      Math.abs(currentPosition - dragStartPosition) > minDragDistance
+    ) {
       hasDragged = true;
     }
 
@@ -156,7 +163,7 @@ function initMarqueeAnimations() {
   // Handle drag end
   const handleDragEnd = () => {
     if (!isDragging) return;
-    
+
     isDragging = false;
     touchDirection = null;
     marquee.style.cursor = "grab";
@@ -166,27 +173,27 @@ function initMarqueeAnimations() {
       const lastVelocity = velocityHistory[velocityHistory.length - 1];
       velocityHistory = [lastVelocity * 0.3]; // REDUCED from 0.5 - less momentum
     }
-    
+
     instantVelocity = 0;
   };
 
   // Mouse/Pointer events for desktop
   marquee.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === 'touch') return;
-    
+    if (e.pointerType === "touch") return;
+
     handleDragStart(e.clientX);
     marquee.setPointerCapture(e.pointerId);
     e.preventDefault();
   });
 
   window.addEventListener("pointermove", (e) => {
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType === "touch") return;
     handleDragMove(e.clientX);
   });
 
   window.addEventListener("pointerup", (e) => {
-    if (e.pointerType === 'touch') return;
-    
+    if (e.pointerType === "touch") return;
+
     if (isDragging && marquee.hasPointerCapture(e.pointerId)) {
       marquee.releasePointerCapture(e.pointerId);
     }
@@ -194,53 +201,69 @@ function initMarqueeAnimations() {
   });
 
   // Touch events for mobile with direction detection
-  marquee.addEventListener("touchstart", (e) => {
-    if (e.touches.length === 1) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      touchDirection = null;
-      
-      handleDragStart(e.touches[0].clientX);
-    }
-  }, { passive: true });
+  marquee.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchDirection = null;
 
-  marquee.addEventListener("touchmove", (e) => {
-    if (e.touches.length !== 1) return;
+        handleDragStart(e.touches[0].clientX);
+      }
+    },
+    { passive: true },
+  );
 
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
+  marquee.addEventListener(
+    "touchmove",
+    (e) => {
+      if (e.touches.length !== 1) return;
 
-    if (touchDirection === null) {
-      const deltaX = Math.abs(touchX - touchStartX);
-      const deltaY = Math.abs(touchY - touchStartY);
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
 
-      if (deltaX > directionThreshold || deltaY > directionThreshold) {
-        if (deltaX > deltaY) {
-          touchDirection = 'horizontal';
-        } else {
-          touchDirection = 'vertical';
+      if (touchDirection === null) {
+        const deltaX = Math.abs(touchX - touchStartX);
+        const deltaY = Math.abs(touchY - touchStartY);
+
+        if (deltaX > directionThreshold || deltaY > directionThreshold) {
+          if (deltaX > deltaY) {
+            touchDirection = "horizontal";
+          } else {
+            touchDirection = "vertical";
+          }
         }
       }
-    }
 
-    if (touchDirection === 'horizontal') {
-      e.preventDefault();
-      handleDragMove(touchX);
-    } else if (touchDirection === 'vertical') {
-      if (isDragging) {
-        isDragging = false;
-        velocityHistory = [];
+      if (touchDirection === "horizontal") {
+        e.preventDefault();
+        handleDragMove(touchX);
+      } else if (touchDirection === "vertical") {
+        if (isDragging) {
+          isDragging = false;
+          velocityHistory = [];
+        }
       }
-    }
-  }, { passive: false });
+    },
+    { passive: false },
+  );
 
-  marquee.addEventListener("touchend", (e) => {
-    handleDragEnd();
-  }, { passive: true });
+  marquee.addEventListener(
+    "touchend",
+    (e) => {
+      handleDragEnd();
+    },
+    { passive: true },
+  );
 
-  marquee.addEventListener("touchcancel", (e) => {
-    handleDragEnd();
-  }, { passive: true });
+  marquee.addEventListener(
+    "touchcancel",
+    (e) => {
+      handleDragEnd();
+    },
+    { passive: true },
+  );
 
   // Prevent text selection and image dragging
   marquee.addEventListener("selectstart", (e) => e.preventDefault());
@@ -258,15 +281,15 @@ function initMarqueeAnimations() {
         const combinedVelocity = dragVelocity + autoScrollSpeed;
         targetValue += combinedVelocity;
         value += (targetValue - value) * smoothness;
-        
+
         // Dampen the drag velocity towards zero
         dragVelocity *= releaseDamping;
-        
+
         // Update skew based on the drag velocity portion only
         const momentumVelocity = dragVelocity * 12; // REDUCED from 15 - less dramatic skew during momentum
         updateVelocityHistory(momentumVelocity);
         applySkew();
-        
+
         // Clear history when drag velocity becomes negligible
         if (Math.abs(dragVelocity) < 0.001) {
           velocityHistory = [];
@@ -276,7 +299,7 @@ function initMarqueeAnimations() {
         // Pure auto-scroll when no drag velocity
         targetValue += autoScrollSpeed;
         value += (targetValue - value) * smoothness;
-        
+
         // No skew during pure auto-scroll
         if (Math.abs(currentSkew) > 0.01) {
           currentSkew += (0 - currentSkew) * skewReturnSpeed;
@@ -312,3 +335,24 @@ if (document.readyState === "loading") {
 } else {
   initMarqueeAnimations();
 }
+
+gsap.fromTo(
+  ".marquee_image",
+  {
+    opacity: 0,
+    y: 150,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 2,
+    stagger: 0.1,
+    ease: "primary",
+    scrollTrigger: {
+      trigger: ".marquee",
+      start: "top 90%",
+      once: true,
+      // markers: true,
+    },
+  },
+);
