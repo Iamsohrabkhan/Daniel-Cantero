@@ -314,3 +314,13 @@
 [data-animate="fadein"] {
   opacity: 0;
 }
+
+
+
+.archieve_image_wrapper > img{
+  transition: all 0.4s ease;
+}
+
+.archieve_image_wrapper:hover > img{
+  transform: scale(1.1);
+}
