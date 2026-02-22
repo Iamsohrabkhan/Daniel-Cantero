@@ -16,8 +16,8 @@ const processAnimation = () => {
             rotateY: -56,
             // perspective: 1200,
             // transformOrigin: "left top",
-            y: isDesktop ? (index === 0 ? 300 : index === 1 ? 500 : 500) : 300, // fixed value for all indexes on mobile
-            transform:"perspective(1200px)",
+            y: isDesktop ? (index === 0 ? 500 : index === 1 ? 700 : 700) : 300, // fixed value for all indexes on mobile
+            transform: "perspective(1200px)",
             willChange: "transform",
           });
 
@@ -25,12 +25,11 @@ const processAnimation = () => {
             rotateY: 0,
             y: isDesktop ? (index === 0 ? 0 : index === 1 ? 25 : 45) : 0,
             scrollTrigger: {
-              trigger: isDesktop ? ".process_top" : card,
+              trigger: isDesktop ? ".processs_top" : card,
               scrub: 1,
-              start: "top bottom",
-              end: isDesktop ? "top top":"top center",
-              // markers: true,
-              
+              start: isDesktop ? "top bottom" : "top bottom",
+              end: isDesktop ? "bottom bottom" : "top center",
+              markers: true,
             },
           });
         });
@@ -52,7 +51,7 @@ const processAnimation = () => {
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: heading,
-              start: "top 90%",
+              start: "top 95%",
               end: "bottom top",
               // toggleActions: "play reverse play reverse",
               // markers: true,
@@ -138,7 +137,7 @@ const processAnimation = () => {
         duration: 1,
         scrollTrigger: {
           trigger: curr,
-          start: "top 95%",
+          start: "top bottom",
           end: "bottom top",
           // markers: true,
         },
