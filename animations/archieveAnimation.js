@@ -1,7 +1,6 @@
 // const canvaDiv = document.querySelector(".canva");
 // const grid = new ElasticGrid(canvaDiv);
 
-
 const archieveMarqueeAnimations = () => {
   const stickyArchieve = document.querySelector(".sticky_archieve");
   const archieveMarquee = document.querySelectorAll(".archieve_marquee");
@@ -13,9 +12,22 @@ const archieveMarqueeAnimations = () => {
     if (archieveMarquee.length < 2) return;
 
     // ---- Initial States ----
-    gsap.set(archieveMarquee[1], {
-      x: -archieveMarquee[1].getBoundingClientRect().width / 3,
-    });
+    function alignChild() {
+      const parent = stickyArchieve;
+      const child = archieveMarquee[1];
+
+      const parentWidth = parent.getBoundingClientRect().width;
+      const childWidth = child.getBoundingClientRect().width;
+
+      const offset = -(childWidth - parentWidth);
+
+      gsap.set(child, { x: offset });
+    }
+
+    alignChild();
+    window.addEventListener("resize", alignChild);
+
+
     gsap.set(".archieve_text_animation_wrapper", {
       scale: 0,
     });
@@ -47,10 +59,10 @@ const archieveMarqueeAnimations = () => {
         scrub: 1,
         invalidateOnRefresh: true,
         onEnter: () => {
-          console.log("entered");
+          // console.log("entered");
         },
         onLeave: () => {
-          console.log("left");
+          // console.log("left");
           gsap.to(".archieve_text_animation_wrapper", {
             scale: 1,
             duration: 0.4,
@@ -66,7 +78,7 @@ const archieveMarqueeAnimations = () => {
           });
         },
         onEnterBack: () => {
-          console.log("reenter");
+          // console.log("reenter");
           gsap.to(".archieve_text_animation_wrapper", {
             scale: 0,
             duration: 0.4,
@@ -139,9 +151,7 @@ const archieveMarqueeAnimations = () => {
       onUpdate: (self) => {
         const rawProgress = self.progress;
 
-        const halfProgress = rawProgress < 0.5
-          ? 0
-          : (rawProgress - 0.5) / 0.5;
+        const halfProgress = rawProgress < 0.5 ? 0 : (rawProgress - 0.5) / 0.5;
 
         const revealCount = Math.round(halfProgress * totalImages);
 
@@ -183,14 +193,14 @@ const archieveMarqueeAnimations = () => {
               scale: 0,
               opacity: 0,
               duration: 0.9,
-              ease: "bounce.out",
+              ease: "power4.out",
               overwrite: "auto",
             });
           } else {
             gsap.to(curr, {
               clipPath: "inset(50%)",
               duration: 0.9,
-              ease: "bounce.out",
+              ease: "power4.out",
               overwrite: "auto",
             });
           }
@@ -203,16 +213,12 @@ const archieveMarqueeAnimations = () => {
       scrollTrigger: {
         trigger: ".archieve_container",
         start: "center bottom",
-        end: "bottom bottom",
+        end: "bottom top",
         scrub: 1,
       },
     });
 
-    t2.fromTo(
-      ".archieve_text",
-      { y: "100vh" },
-      { y: "0vh" },
-    );
+    t2.fromTo(".archieve_text", { y: "100vh" }, { y: "0vh" });
 
     // ---- Archieve Text Horizontal Scroll ----
     const archieveText = document.querySelector(".archieve_text");
@@ -239,7 +245,7 @@ const archieveMarqueeAnimations = () => {
     const calcX = width - innerWidth + oneLetterWidth * 3;
 
     t2.to(".archieve_text", {
-      x: () => `${-calcX}px`,
+      x: () => `-100%`,
     });
 
     // ---- Letter Reveal on Scroll ----

@@ -315,12 +315,16 @@
   opacity: 0;
 }
 
-
-
-.archieve_image_wrapper > img{
+.sticky_archieve .archieve_image_parallax_container {
+  pointer-events: none;
+}
+.sticky_archieve.sticky_mask .archieve_image_parallax_container {
+  pointer-events: all;
+}
+.archieve_image_wrapper > img {
   transition: all 0.4s ease;
 }
 
-.archieve_image_wrapper:hover > img{
+.archieve_image_wrapper:hover > img {
   transform: scale(1.1);
 }

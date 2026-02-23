@@ -33,7 +33,7 @@ const sectionHeaderAnimation = () => {
               rotateX: 0,
             
               duration: 1,
-              stagger: 0.045, 
+              stagger: 0.06, 
               ease: "secondary",
             },
           );
@@ -51,7 +51,7 @@ const sectionHeaderAnimation = () => {
               rotateX: 0,
              
               duration: 1, // letterDuration from Framer
-              stagger: 0.045, // letterDelay from Framer
+              stagger: 0.06, // letterDelay from Framer
               ease: "secondary",
             },
             "<",

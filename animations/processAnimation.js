@@ -29,7 +29,7 @@ const processAnimation = () => {
               scrub: 1,
               start: isDesktop ? "top bottom" : "top bottom",
               end: isDesktop ? "bottom bottom" : "top center",
-              markers: true,
+              // markers: true,
             },
           });
         });
