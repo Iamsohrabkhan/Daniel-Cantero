@@ -170,15 +170,15 @@ const archieveMarqueeAnimations = () => {
             gsap.to(curr, {
               scale: 1,
               opacity: 1,
-              duration: 0.4,
-              ease: "power3.out",
+              duration: 0.7,
+              ease: "power1.inOut",
               overwrite: "auto",
             });
           } else {
             gsap.to(curr, {
               clipPath: "inset(0%)",
-              duration: 0.4,
-              ease: "power3.out",
+              duration: 0.7,
+              ease: "power1.inOut",
               overwrite: "auto",
             });
           }
