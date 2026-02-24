@@ -27,7 +27,6 @@ const archieveMarqueeAnimations = () => {
     alignChild();
     window.addEventListener("resize", alignChild);
 
-
     gsap.set(".archieve_text_animation_wrapper", {
       scale: 0,
     });
@@ -146,6 +145,8 @@ const archieveMarqueeAnimations = () => {
       trigger: ".archieve_container",
       start: "top top",
       end: "center bottom",
+      invalidateOnRefresh: true,
+
       scrub: 1,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
@@ -170,14 +171,14 @@ const archieveMarqueeAnimations = () => {
             gsap.to(curr, {
               scale: 1,
               opacity: 1,
-              duration: 0.7,
+              duration: 0.5,
               ease: "power1.inOut",
               overwrite: "auto",
             });
           } else {
             gsap.to(curr, {
               clipPath: "inset(0%)",
-              duration: 0.7,
+              duration: 0.5,
               ease: "power1.inOut",
               overwrite: "auto",
             });
