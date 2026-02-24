@@ -263,7 +263,7 @@ const archieveMarqueeAnimations = () => {
       ScrollTrigger.create({
         trigger: ".archieve_container",
         start: "top top",
-        end: "bottom 90%",
+        end: "bottom bottom",
         onUpdate: () => {
           const rect = letter.getBoundingClientRect();
           const viewportWidth = window.innerWidth;

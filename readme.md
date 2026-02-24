@@ -41,7 +41,7 @@
 <!-- CSS -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/index.css"
+  href="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/index.css"
 />
 
 <!-- Core Libraries -->
@@ -52,26 +52,26 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/CustomEase.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/registerAnimations/fadeIn.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/registerAnimations/slideUp.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/registerAnimations/slideLeft.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/registerAnimations/fadeIn.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/registerAnimations/slideUp.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/registerAnimations/slideLeft.js"></script>
 
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/headline.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/heroAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/navAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/hoverListAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/archieveAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/teamAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/parallaxImagesAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/priceAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/faqAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/processAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/pageHeroSectionAnimations.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/workAnimations.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/studioAnimations.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/footerAnimation.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/errorAnimations.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/headline.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/heroAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/navAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/hoverListAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/archieveAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/teamAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/parallaxImagesAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/priceAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/faqAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/processAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/pageHeroSectionAnimations.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/workAnimations.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/studioAnimations.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/footerAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/errorAnimations.js"></script>
 
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/index.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/index.js"></script>
 
-<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@2b4be046e12c29a106859ad34c17f90502abcce2/animations/marqueeAnimation.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@d1fc916d8a9fe0a7692ba328f11eb291bef68ce1/animations/marqueeAnimation.js"></script>

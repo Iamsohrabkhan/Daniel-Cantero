@@ -57,6 +57,7 @@ const pageHeroLoadAnimations = () => {
         mask: "lines",
         linesClass: "section_hero_line",
         autoSplit: true,
+        smartWrap:true,
         charsClass: "section_paragraph_char",
       });
       const numberSplit = SplitText.create(number, {
@@ -84,7 +85,7 @@ const pageHeroLoadAnimations = () => {
               yPercent: 100,
               stagger: 0.02,
               duration: 1.2,
-              ease:"primary"
+              ease: "primary",
             },
             0.4,
           );
@@ -140,12 +141,18 @@ const pageHeroLoadAnimations = () => {
           );
         }
         if (document.querySelector(".grid_row_icon")) {
-          tl.from(".grid_row_icon", {
-            opacity: 0,
-            x: -100,
-            duration: 0.7,
-            stagger: 0.02,
-          });
+          tl.fromTo(
+            ".grid_row_icon",
+            {
+              opacity: 0,
+              x: -100,
+            },
+            { opacity: 0.2,
+              x: 0,
+              duration: 0.7,
+              stagger: 0.02,
+            },
+          );
         }
       }
     });

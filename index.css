@@ -328,3 +328,16 @@
 .archieve_image_wrapper:hover > img {
   transform: scale(1.1);
 }
+
+.section_heading [class^="section_heading_line"] {
+  display: block;
+  overflow: hidden; /* since you're using mask: "lines" */
+}
+.section_heading_word {
+  white-space: nowrap !important;
+  display: inline-block !important;
+}
+.hero_heading_word {
+  white-space: nowrap !important;
+  display: inline-block !important;
+}

@@ -3,6 +3,7 @@
 const heroAnimation = () => {
   const hero = document.querySelector(".hero__container");
   const heroList = gsap.utils.toArray(".hero_list_item");
+  const heroHeading = document.querySelector(".hero_heading");
 
   if (hero) {
     // Wait for fonts to load before splitting text
@@ -15,10 +16,12 @@ const heroAnimation = () => {
         charsClass: "hero_char",
         linesClass: "hero_line++",
       });
+      heroHeading.style.whiteSpace = "nowrap";
 
       let heroDescriptionText = SplitText.create(".hero_description", {
         type: "lines",
         linesClass: "hero_description_line",
+        autoSplit: true,
       });
 
       // Create timeline AFTER splits are complete
