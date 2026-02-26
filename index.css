@@ -114,7 +114,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: start;
-      gap: 4px;
+      gap: 2px;
       @media (max-width: 768px) {
         gap: 2px;
       }
@@ -340,4 +340,8 @@
 .hero_heading_word {
   white-space: nowrap !important;
   display: inline-block !important;
+}
+#clone {
+  height: 100vh; /* THIS is the key — clips the clone */
+  overflow: hidden;
 }

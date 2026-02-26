@@ -61,6 +61,8 @@ const navAnimations = () => {
 
 const logoAnimation = () => {
   const logo = document.querySelector(".logo");
+  const word2 = logo.querySelectorAll("a .logo_word-mask")[1];
+  // word2.style.transition = "transform 0.3s";
   if (!logo) return;
 
   const wordWrapper = logo.querySelectorAll(".logo_word-mask");
@@ -69,8 +71,10 @@ const logoAnimation = () => {
   const toggleLogoState = (state) => {
     if (state === "initial") {
       wordWrapper.forEach((word) => word.classList.remove("reveal"));
+      word2.style.transform = "translateX(0px)";
     } else if (state === "reveal") {
       wordWrapper.forEach((word) => word.classList.add("reveal"));
+      word2.style.transform = "translateX(2px)";
     } else {
       console.warn("Unknown state:", state);
     }

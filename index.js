@@ -8,7 +8,7 @@ CustomEase.create("tertially", "0.6, 0.2, 0, 1");
 const detailPage = document.querySelector(".archieve_detail_image_wrapper");
 const lenis = new Lenis({
   infinite: detailPage && innerWidth >= 478 ? true : false,
-  
+  syncTouch: detailPage && innerWidth >= 478 ? true : false,
 });
 lenis.on("scroll", ScrollTrigger.update);
 gsap.ticker.add((time) => {
@@ -62,5 +62,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ErrorPageAnimations();
 });
-
-
