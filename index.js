@@ -6,29 +6,29 @@ CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
 CustomEase.create("tertially", "0.6, 0.2, 0, 1");
 const detailPage = document.querySelector(".archieve_detail_image_wrapper");
-let lenis;
+const LenisClass = Lenis; // plain global, no window prefix
 
-function initLenis() {
-  if (lenis) lenis.destroy();
+const shouldEnable = detailPage && window.innerWidth >= 478;
 
-  const shouldEnable = detailPage && window.innerWidth >= 478;
+lenis = new LenisClass({
+  infinite: shouldEnable,
+  syncTouch: shouldEnable,
+});
 
-  lenis = new window.Lenis(
-    detailPage ? { infinite: shouldEnable, syncTouch: shouldEnable } : {},
-  );
+lenis.on("scroll", ScrollTrigger.update);
 
-  lenis.on("scroll", ScrollTrigger.update);
-}
+// on resize, just update options directly
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const shouldEnable = detailPage && window.innerWidth >= 478;
+    lenis.options.infinite = shouldEnable;
+    lenis.options.syncTouch = shouldEnable;
+  }, 150);
+});
 
-initLenis();
 
-if (detailPage) {
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(initLenis, 150);
-  });
-}
 
 gsap.ticker.add((time) => {
   lenis.raf(time * 1000); // always uses latest lenis instance via closure
