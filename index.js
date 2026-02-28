@@ -13,7 +13,7 @@ function initLenis() {
 
   const shouldEnable = detailPage && window.innerWidth >= 478;
 
-  lenis = new Lenis(
+  lenis = new window.Lenis(
     detailPage ? { infinite: shouldEnable, syncTouch: shouldEnable } : {},
   );
 
@@ -32,13 +32,12 @@ if (detailPage) {
 
 gsap.ticker.add((time) => {
   lenis.raf(time * 1000); // always uses latest lenis instance via closure
-  parallaxImagesAnimation();
 });
 
 gsap.ticker.lagSmoothing(0);
 
-
 if (document.readyState === "complete") {
+  parallaxImagesAnimation();
   heroAnimation();
   pageHeroLoadAnimations();
   pageHeroAnimations();
@@ -57,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
   slideLeft();
 
   // hero animations
+  gsap.ticker.add(() => parallaxImagesAnimation());
   navAnimations();
   navLogoAnimation();
   sectionHeaderAnimation();
