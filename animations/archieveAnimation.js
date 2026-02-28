@@ -287,6 +287,7 @@ const archieveDetail = () => {
   const splitParagraph = SplitText.create(paragraph, {
     type: "lines",
     mask: "lines",
+    autoSplit: true,
   });
 
   const seq = gsap.timeline();

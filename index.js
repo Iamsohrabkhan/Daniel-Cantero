@@ -6,17 +6,38 @@ CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
 CustomEase.create("tertially", "0.6, 0.2, 0, 1");
 const detailPage = document.querySelector(".archieve_detail_image_wrapper");
-const lenis = new Lenis({
-  infinite: detailPage && innerWidth >= 478 ? true : false,
-  syncTouch: detailPage && innerWidth >= 478 ? true : false,
-});
-lenis.on("scroll", ScrollTrigger.update);
+let lenis;
+
+function initLenis() {
+  if (lenis) lenis.destroy();
+
+  const shouldEnable = detailPage && window.innerWidth >= 478;
+
+  lenis = new Lenis(
+    detailPage ? { infinite: shouldEnable, syncTouch: shouldEnable } : {},
+  );
+
+  lenis.on("scroll", ScrollTrigger.update);
+}
+
+initLenis();
+
+if (detailPage) {
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(initLenis, 150);
+  });
+}
+
 gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
+  lenis.raf(time * 1000); // always uses latest lenis instance via closure
   parallaxImagesAnimation();
 });
 
 gsap.ticker.lagSmoothing(0);
+
+
 if (document.readyState === "complete") {
   heroAnimation();
   pageHeroLoadAnimations();
