@@ -76,10 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // work section animations
   workDetailAnimation();
   archieveDetail();
-
   studioAnimations();
 
   // error
-
   ErrorPageAnimations();
 });

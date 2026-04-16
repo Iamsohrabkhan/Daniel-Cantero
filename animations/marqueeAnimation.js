@@ -1,119 +1,107 @@
-function initMarqueeAnimations() {
-  // Check if marquee exists first
-  const marquee = document.querySelector(".marquee");
-  if (!marquee) {
-    return;
-  }
+function initMarqueeAnimations(marquee) {
+  if (!marquee) return;
 
-  // Device detection
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent,
+      navigator.userAgent
     ) || window.innerWidth < 768;
 
-  let value = 0;
-  const autoScrollSpeed = -0.05;
-  const marqueeImages = document.querySelectorAll(".marquee_image");
+  // =========================
+  // INITIAL SELECT (original items only)
+  // =========================
+  let marqueeImages = marquee.querySelectorAll(
+    ".marquee_image, .marquee_item"
+  );
+
+  // =========================
+  // CLONE ITEMS FOR LOOPING
+  // =========================
+  const itemsArray = Array.from(marqueeImages);
+
+  itemsArray.forEach((item) => {
+    const clone = item.cloneNode(true);
+    clone.classList.add("is-clone");
+    clone.setAttribute("aria-hidden", "true");
+    marquee.appendChild(clone);
+  });
+
+  // IMPORTANT FIX:
+  // Re-select AFTER cloning so skew + animation includes clones
+  marqueeImages = marquee.querySelectorAll(
+    ".marquee_image, .marquee_item"
+  );
+
+  // =========================
+  // GSAP CORE
+  // =========================
   const moveX = gsap.quickSetter(marquee, "x", "%");
   const wrapper = gsap.utils.wrap(0, -50);
 
+  let value = 0;
+  let targetValue = 0;
+
+  const autoScrollSpeed = -0.05;
+
   let isDragging = false;
   let lastPosition = 0;
-  let currentPosition = 0;
   let dragVelocity = 0;
-  let targetValue = 0;
-  let instantVelocity = 0;
 
-  // Touch direction detection
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchDirection = null;
-  const directionThreshold = 10;
-
-  // Enhanced velocity tracking for professional skew
   let velocityHistory = [];
   const velocityHistoryLength = isMobile ? 4 : 6;
+
   let currentSkew = 0;
   let targetSkew = 0;
 
-  // Adaptive settings based on device - REDUCED SENSITIVITY
   const smoothness = isMobile ? 0.15 : 0.12;
-  const dragSensitivity = isMobile ? 0.035 : 0.03; // REDUCED from 0.08/0.06 - less distance per swipe
-  const releaseDamping = isMobile ? 0.88 : 0.9; // REDUCED from 0.95/0.96 - faster deceleration
+  const dragSensitivity = isMobile ? 0.035 : 0.03;
+  const releaseDamping = isMobile ? 0.88 : 0.9;
 
-  // Professional skew settings - responsive and smooth
   const maxSkew = isMobile ? 12 : 20;
-  const skewSmoothness = isMobile ? 0.18 : 0.2;
-  const skewReturnSpeed = isMobile ? 0.15 : 0.18; // Faster skew return
+  const skewReturnSpeed = isMobile ? 0.15 : 0.18;
   const velocityToSkewRatio = isMobile ? 0.8 : 1.2;
   const minVelocityForSkew = 0.1;
 
-  // Minimum drag distance to prevent accidental clicks
-  let dragStartPosition = 0;
-  let hasDragged = false;
-  const minDragDistance = 5;
-
-  // Calculate smooth average velocity with recent bias
-  const getSmoothedVelocity = () => {
-    if (velocityHistory.length === 0) return 0;
-
-    let weightedSum = 0;
-    let weightSum = 0;
-
-    velocityHistory.forEach((v, index) => {
-      const weight = index + 1;
-      weightedSum += v * weight;
-      weightSum += weight;
-    });
-
-    return weightedSum / weightSum;
-  };
-
-  // Update velocity history
-  const updateVelocityHistory = (velocity) => {
-    velocityHistory.push(velocity);
+  // =========================
+  // VELOCITY SYSTEM
+  // =========================
+  const updateVelocityHistory = (v) => {
+    velocityHistory.push(v);
     if (velocityHistory.length > velocityHistoryLength) {
       velocityHistory.shift();
     }
   };
 
-  // Calculate target skew based on velocity with enhanced dynamics
-  const calculateTargetSkew = (rawVelocity) => {
-    const smoothVelocity = getSmoothedVelocity();
-    const velocityMagnitude = Math.abs(smoothVelocity);
+  const getSmoothedVelocity = () => {
+    if (!velocityHistory.length) return 0;
 
-    // If velocity is minimal, return zero
-    if (velocityMagnitude < minVelocityForSkew) {
-      return 0;
-    }
+    let sum = 0;
+    let weight = 0;
 
-    // Direct velocity mapping with power curve
-    let skewAmount = smoothVelocity * velocityToSkewRatio;
+    velocityHistory.forEach((v, i) => {
+      const w = i + 1;
+      sum += v * w;
+      weight += w;
+    });
 
-    // Apply a subtle ease-out curve
-    const normalizedSkew = skewAmount / maxSkew;
-    const easedNormalized =
-      normalizedSkew > 0
-        ? Math.pow(Math.min(normalizedSkew, 1), 0.7)
-        : -Math.pow(Math.min(Math.abs(normalizedSkew), 1), 0.7);
-
-    skewAmount = easedNormalized * maxSkew;
-
-    // Clamp to max values
-    skewAmount = Math.max(-maxSkew, Math.min(maxSkew, skewAmount));
-
-    return skewAmount;
+    return sum / weight;
   };
 
-  // Apply skew with smooth interpolation
+  const calculateSkew = () => {
+    const v = getSmoothedVelocity();
+    if (Math.abs(v) < minVelocityForSkew) return 0;
+
+    let skew = v * velocityToSkewRatio;
+    skew = Math.max(-maxSkew, Math.min(maxSkew, skew));
+    return skew;
+  };
+
   const applySkew = () => {
-    targetSkew = calculateTargetSkew(instantVelocity);
+    targetSkew = calculateSkew();
 
-    // Smooth interpolation towards target
-    const interpolationSpeed = isDragging ? skewSmoothness : skewReturnSpeed;
-    currentSkew += (targetSkew - currentSkew) * interpolationSpeed;
+    const speed = isDragging ? 0.2 : skewReturnSpeed;
 
-    // Apply with hardware acceleration
+    currentSkew += (targetSkew - currentSkew) * speed;
+
     marqueeImages.forEach((img) => {
       gsap.set(img, {
         skewX: currentSkew,
@@ -123,67 +111,47 @@ function initMarqueeAnimations() {
     });
   };
 
-  // Handle drag start
-  const handleDragStart = (position) => {
+  // =========================
+  // DRAG SYSTEM
+  // =========================
+  const handleDragStart = (x) => {
     isDragging = true;
-    lastPosition = position;
-    currentPosition = position;
-    dragStartPosition = position;
-    hasDragged = false;
-    dragVelocity = 0;
-    instantVelocity = 0;
+    lastPosition = x;
     velocityHistory = [];
 
     marquee.style.cursor = "grabbing";
   };
 
-  // Handle drag move with enhanced velocity tracking
-  const handleDragMove = (position) => {
+  const handleDragMove = (x) => {
     if (!isDragging) return;
 
-    currentPosition = position;
-    const deltaX = currentPosition - lastPosition;
+    const delta = x - lastPosition;
 
-    if (
-      !hasDragged &&
-      Math.abs(currentPosition - dragStartPosition) > minDragDistance
-    ) {
-      hasDragged = true;
-    }
-
-    dragVelocity = deltaX * dragSensitivity;
-    instantVelocity = deltaX;
+    dragVelocity = delta * dragSensitivity;
     targetValue += dragVelocity;
 
-    updateVelocityHistory(instantVelocity);
+    updateVelocityHistory(delta);
 
-    lastPosition = currentPosition;
+    lastPosition = x;
   };
 
-  // Handle drag end
   const handleDragEnd = () => {
-    if (!isDragging) return;
-
     isDragging = false;
-    touchDirection = null;
     marquee.style.cursor = "grab";
 
-    // Reduced momentum on release
-    if (velocityHistory.length > 0) {
-      const lastVelocity = velocityHistory[velocityHistory.length - 1];
-      velocityHistory = [lastVelocity * 0.3]; // REDUCED from 0.5 - less momentum
+    if (velocityHistory.length) {
+      velocityHistory = [velocityHistory.at(-1) * 0.3];
     }
-
-    instantVelocity = 0;
   };
 
-  // Mouse/Pointer events for desktop
+  // =========================
+  // POINTER EVENTS
+  // =========================
   marquee.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "touch") return;
 
     handleDragStart(e.clientX);
     marquee.setPointerCapture(e.pointerId);
-    e.preventDefault();
   });
 
   window.addEventListener("pointermove", (e) => {
@@ -193,120 +161,61 @@ function initMarqueeAnimations() {
 
   window.addEventListener("pointerup", (e) => {
     if (e.pointerType === "touch") return;
-
-    if (isDragging && marquee.hasPointerCapture(e.pointerId)) {
-      marquee.releasePointerCapture(e.pointerId);
-    }
     handleDragEnd();
   });
 
-  // Touch events for mobile with direction detection
-  marquee.addEventListener(
-    "touchstart",
-    (e) => {
-      if (e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchDirection = null;
+  // =========================
+  // TOUCH EVENTS
+  // =========================
+  marquee.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 1) {
+      handleDragStart(e.touches[0].clientX);
+    }
+  });
 
-        handleDragStart(e.touches[0].clientX);
-      }
-    },
-    { passive: true },
-  );
+  marquee.addEventListener("touchmove", (e) => {
+    if (e.touches.length === 1) {
+      handleDragMove(e.touches[0].clientX);
+    }
+  });
 
-  marquee.addEventListener(
-    "touchmove",
-    (e) => {
-      if (e.touches.length !== 1) return;
+  marquee.addEventListener("touchend", handleDragEnd);
+  marquee.addEventListener("touchcancel", handleDragEnd);
 
-      const touchX = e.touches[0].clientX;
-      const touchY = e.touches[0].clientY;
-
-      if (touchDirection === null) {
-        const deltaX = Math.abs(touchX - touchStartX);
-        const deltaY = Math.abs(touchY - touchStartY);
-
-        if (deltaX > directionThreshold || deltaY > directionThreshold) {
-          if (deltaX > deltaY) {
-            touchDirection = "horizontal";
-          } else {
-            touchDirection = "vertical";
-          }
-        }
-      }
-
-      if (touchDirection === "horizontal") {
-        e.preventDefault();
-        handleDragMove(touchX);
-      } else if (touchDirection === "vertical") {
-        if (isDragging) {
-          isDragging = false;
-          velocityHistory = [];
-        }
-      }
-    },
-    { passive: false },
-  );
-
-  marquee.addEventListener(
-    "touchend",
-    (e) => {
-      handleDragEnd();
-    },
-    { passive: true },
-  );
-
-  marquee.addEventListener(
-    "touchcancel",
-    (e) => {
-      handleDragEnd();
-    },
-    { passive: true },
-  );
-
-  // Prevent text selection and image dragging
-  marquee.addEventListener("selectstart", (e) => e.preventDefault());
-  marquee.addEventListener("dragstart", (e) => e.preventDefault());
-
-  // Main animation loop with smooth velocity transition
+  // =========================
+  // MAIN LOOP
+  // =========================
   gsap.ticker.add(() => {
     if (isDragging) {
       value += (targetValue - value) * smoothness;
       applySkew();
     } else {
-      // Always add movement - either from drag velocity or auto-scroll
-      if (Math.abs(dragVelocity) > 0.0001) {
-        // Combine drag velocity with auto-scroll speed
-        const combinedVelocity = dragVelocity + autoScrollSpeed;
-        targetValue += combinedVelocity;
+      if (Math.abs(dragVelocity) > 0.001) {
+        targetValue += dragVelocity + autoScrollSpeed;
         value += (targetValue - value) * smoothness;
 
-        // Dampen the drag velocity towards zero
         dragVelocity *= releaseDamping;
 
-        // Update skew based on the drag velocity portion only
-        const momentumVelocity = dragVelocity * 12; // REDUCED from 15 - less dramatic skew during momentum
-        updateVelocityHistory(momentumVelocity);
+        updateVelocityHistory(dragVelocity * 10);
+
         applySkew();
 
-        // Clear history when drag velocity becomes negligible
         if (Math.abs(dragVelocity) < 0.001) {
           velocityHistory = [];
           dragVelocity = 0;
         }
       } else {
-        // Pure auto-scroll when no drag velocity
         targetValue += autoScrollSpeed;
         value += (targetValue - value) * smoothness;
 
-        // No skew during pure auto-scroll
-        if (Math.abs(currentSkew) > 0.01) {
-          currentSkew += (0 - currentSkew) * skewReturnSpeed;
-          marqueeImages.forEach((img) => {
-            gsap.set(img, { skewX: currentSkew, force3D: true });
+        currentSkew += (0 - currentSkew) * skewReturnSpeed;
+
+        marqueeImages.forEach((img) => {
+          gsap.set(img, {
+            skewX: currentSkew,
+            force3D: true,
           });
-        }
+        });
       }
     }
 
@@ -314,45 +223,58 @@ function initMarqueeAnimations() {
     moveX(wrapX);
   });
 
-  // Initial setup
+  // =========================
+  // INIT STYLES
+  // =========================
   marquee.style.cursor = "grab";
   marquee.style.userSelect = "none";
-  marquee.style.webkitUserSelect = "none";
   marquee.style.touchAction = "pan-y";
-  marquee.style.webkitTouchCallout = "none";
 
   marqueeImages.forEach((img) => {
-    img.style.transformOrigin = "center center";
     img.style.pointerEvents = "none";
     img.draggable = false;
     img.style.willChange = "transform";
+    img.style.transformOrigin = "center center";
+  });
+
+  // =========================
+  // SCROLL ANIMATION
+  // =========================
+  gsap.fromTo(
+    marqueeImages,
+    {
+      opacity: 0,
+      y: 150,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 2,
+      stagger: 0.1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: marquee,
+        start: "top 90%",
+        once: true,
+      },
+    }
+  );
+}
+
+// =========================
+// INIT ALL MARQUEES
+// =========================
+function initAllMarquees() {
+  document.querySelectorAll(".marquee").forEach((marquee) => {
+    initMarqueeAnimations(marquee);
   });
 }
 
-// Call the function when DOM is ready
+// =========================
+// DOM READY
+// =========================
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initMarqueeAnimations);
+  document.addEventListener("DOMContentLoaded", initAllMarquees);
 } else {
-  initMarqueeAnimations();
+  initAllMarquees();
 }
-
-gsap.fromTo(
-  ".marquee_image",
-  {
-    opacity: 0,
-    y: 150,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    duration: 2,
-    stagger: 0.1,
-    ease: "primary",
-    scrollTrigger: {
-      trigger: ".marquee",
-      start: "top 90%",
-      once: true,
-      // markers: true,
-    },
-  },
-);
