@@ -7,14 +7,39 @@ function initMarqueeAnimations(marquee) {
     ) || window.innerWidth < 768;
 
   // =========================
-  // INITIAL SELECT (original items only)
+  // CONFIG VIA DATA ATTRIBUTES
+  // =========================
+  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+
+  const speedAttr = parseFloat(marquee.dataset.speed);
+  const dragAttr = parseFloat(marquee.dataset.drag);
+  const dampingAttr = parseFloat(marquee.dataset.damping);
+
+  const autoScrollSpeed = !isNaN(speedAttr)
+    ? clamp(speedAttr, -0.3, 0.3)
+    : -0.05;
+
+  const dragSensitivity = !isNaN(dragAttr)
+    ? dragAttr
+    : isMobile
+    ? 0.035
+    : 0.03;
+
+  const releaseDamping = !isNaN(dampingAttr)
+    ? dampingAttr
+    : isMobile
+    ? 0.88
+    : 0.9;
+
+  // =========================
+  // SELECT ITEMS
   // =========================
   let marqueeImages = marquee.querySelectorAll(
     ".marquee_image, .marquee_item"
   );
 
   // =========================
-  // CLONE ITEMS FOR LOOPING
+  // CLONE ITEMS
   // =========================
   const itemsArray = Array.from(marqueeImages);
 
@@ -25,8 +50,7 @@ function initMarqueeAnimations(marquee) {
     marquee.appendChild(clone);
   });
 
-  // IMPORTANT FIX:
-  // Re-select AFTER cloning so skew + animation includes clones
+  // IMPORTANT: re-select AFTER cloning
   marqueeImages = marquee.querySelectorAll(
     ".marquee_image, .marquee_item"
   );
@@ -40,8 +64,6 @@ function initMarqueeAnimations(marquee) {
   let value = 0;
   let targetValue = 0;
 
-  const autoScrollSpeed = -0.05;
-
   let isDragging = false;
   let lastPosition = 0;
   let dragVelocity = 0;
@@ -53,8 +75,6 @@ function initMarqueeAnimations(marquee) {
   let targetSkew = 0;
 
   const smoothness = isMobile ? 0.15 : 0.12;
-  const dragSensitivity = isMobile ? 0.035 : 0.03;
-  const releaseDamping = isMobile ? 0.88 : 0.9;
 
   const maxSkew = isMobile ? 12 : 20;
   const skewReturnSpeed = isMobile ? 0.15 : 0.18;
@@ -91,8 +111,7 @@ function initMarqueeAnimations(marquee) {
     if (Math.abs(v) < minVelocityForSkew) return 0;
 
     let skew = v * velocityToSkewRatio;
-    skew = Math.max(-maxSkew, Math.min(maxSkew, skew));
-    return skew;
+    return Math.max(-maxSkew, Math.min(maxSkew, skew));
   };
 
   const applySkew = () => {
@@ -118,7 +137,6 @@ function initMarqueeAnimations(marquee) {
     isDragging = true;
     lastPosition = x;
     velocityHistory = [];
-
     marquee.style.cursor = "grabbing";
   };
 
@@ -131,7 +149,6 @@ function initMarqueeAnimations(marquee) {
     targetValue += dragVelocity;
 
     updateVelocityHistory(delta);
-
     lastPosition = x;
   };
 
@@ -197,7 +214,6 @@ function initMarqueeAnimations(marquee) {
         dragVelocity *= releaseDamping;
 
         updateVelocityHistory(dragVelocity * 10);
-
         applySkew();
 
         if (Math.abs(dragVelocity) < 0.001) {
@@ -211,10 +227,7 @@ function initMarqueeAnimations(marquee) {
         currentSkew += (0 - currentSkew) * skewReturnSpeed;
 
         marqueeImages.forEach((img) => {
-          gsap.set(img, {
-            skewX: currentSkew,
-            force3D: true,
-          });
+          gsap.set(img, { skewX: currentSkew, force3D: true });
         });
       }
     }
@@ -242,10 +255,7 @@ function initMarqueeAnimations(marquee) {
   // =========================
   gsap.fromTo(
     marqueeImages,
-    {
-      opacity: 0,
-      y: 150,
-    },
+    { opacity: 0, y: 150 },
     {
       opacity: 1,
       y: 0,
@@ -262,17 +272,12 @@ function initMarqueeAnimations(marquee) {
 }
 
 // =========================
-// INIT ALL MARQUEES
+// INIT ALL
 // =========================
 function initAllMarquees() {
-  document.querySelectorAll(".marquee").forEach((marquee) => {
-    initMarqueeAnimations(marquee);
-  });
+  document.querySelectorAll(".marquee").forEach(initMarqueeAnimations);
 }
 
-// =========================
-// DOM READY
-// =========================
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initAllMarquees);
 } else {
