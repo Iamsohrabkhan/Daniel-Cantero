@@ -3,7 +3,7 @@ function initMarqueeAnimations(marquee) {
 
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
+      navigator.userAgent,
     ) || window.innerWidth < 768;
 
   // =========================
@@ -19,30 +19,29 @@ function initMarqueeAnimations(marquee) {
     ? clamp(speedAttr, -0.3, 0.3)
     : -0.05;
 
-  const dragSensitivity = !isNaN(dragAttr)
-    ? dragAttr
-    : isMobile
-    ? 0.035
-    : 0.03;
+  const dragSensitivity = !isNaN(dragAttr) ? dragAttr : isMobile ? 0.035 : 0.03;
 
   const releaseDamping = !isNaN(dampingAttr)
     ? dampingAttr
     : isMobile
-    ? 0.88
-    : 0.9;
+      ? 0.88
+      : 0.9;
 
   // =========================
   // SELECT ITEMS
   // =========================
-  let marqueeImages = marquee.querySelectorAll(
-    ".marquee_image, .marquee_item"
-  );
+
+  let marqueeImages = marquee.querySelectorAll(".marquee_image_item");
+
+  if (!marqueeImages.length) {
+    marqueeImages = marquee.querySelectorAll(".marquee_image, .marquee_item");
+  }
 
   // =========================
   // CLONE ITEMS
   // =========================
-  const itemsArray = Array.from(marqueeImages);
 
+  const itemsArray = Array.from(marqueeImages);
   itemsArray.forEach((item) => {
     const clone = item.cloneNode(true);
     clone.classList.add("is-clone");
@@ -51,9 +50,7 @@ function initMarqueeAnimations(marquee) {
   });
 
   // IMPORTANT: re-select AFTER cloning
-  marqueeImages = marquee.querySelectorAll(
-    ".marquee_image, .marquee_item"
-  );
+  marqueeImages = marquee.querySelectorAll(".marquee_image, .marquee_item");
 
   // =========================
   // GSAP CORE
@@ -267,7 +264,7 @@ function initMarqueeAnimations(marquee) {
         start: "top 90%",
         once: true,
       },
-    }
+    },
   );
 }
 
