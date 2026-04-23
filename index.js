@@ -1,23 +1,28 @@
-// import Lenis from "lenis";
-
 gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
 
+// =========================
+// CUSTOM EASING
+// =========================
 CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
 CustomEase.create("tertially", "0.6, 0.2, 0, 1");
+
+// =========================
+// LENIS SETUP
+// =========================
 const detailPage = document.querySelector(".archieve_detail_image_wrapper");
-const LenisClass = Lenis; // plain global, no window prefix
+const LenisClass = Lenis;
 
 const shouldEnable = detailPage && window.innerWidth >= 478;
 
-lenis = new LenisClass({
+const lenis = new LenisClass({
   infinite: shouldEnable,
   syncTouch: shouldEnable,
 });
 
 lenis.on("scroll", ScrollTrigger.update);
 
-// on resize, just update options directly
+// resize handling
 let resizeTimer;
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimer);
@@ -28,56 +33,62 @@ window.addEventListener("resize", () => {
   }, 150);
 });
 
-
-
+// GSAP ticker
 gsap.ticker.add((time) => {
-  lenis.raf(time * 1000); // always uses latest lenis instance via closure
+  lenis.raf(time * 1000);
 });
 
 gsap.ticker.lagSmoothing(0);
 
-if (document.readyState === "complete") {
-  parallaxImagesAnimation();
-  heroAnimation();
-  pageHeroLoadAnimations();
-  pageHeroAnimations();
-} else {
-  window.addEventListener("load", () => {
-    heroAnimation();
-    pageHeroAnimations();
-    pageHeroLoadAnimations();
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+// =========================
+// INIT FUNCTIONS
+// =========================
+function initAnimations() {
   // universal animations
   fadeInAnimation();
   slideIn();
   slideLeft();
 
-  // hero animations
-  gsap.ticker.add(() => parallaxImagesAnimation());
+  // navigation
   navAnimations();
   navLogoAnimation();
   sectionHeaderAnimation();
   hoverListAnimations();
+
+  // sections
   projectAnimation();
   archieveMarqueeAnimations();
   teamAnimation();
   faqAnimation();
   processAnimation();
   priceAnimation();
-
   footerAnimations();
 
-  // archieve page grid animations
+  // archive
   archieveHoverAnimations();
 
-  // work section animations
+  // pages
   workDetailAnimation();
   archieveDetail();
   studioAnimations();
 
   // error
   ErrorPageAnimations();
-});
+
+  // hero
+  heroAnimation();
+  pageHeroLoadAnimations();
+  pageHeroAnimations();
+}
+
+// =========================
+// BOOTSTRAP (NO DOMContentLoaded)
+// =========================
+const isReady =
+  document.readyState === "interactive" || document.readyState === "complete";
+
+if (isReady) {
+  initAnimations();
+} else {
+  window.addEventListener("load", initAnimations, { once: true });
+}
