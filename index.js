@@ -28,28 +28,13 @@ window.addEventListener("resize", () => {
   }, 150);
 });
 
-
-
 gsap.ticker.add((time) => {
   lenis.raf(time * 1000); // always uses latest lenis instance via closure
 });
 
 gsap.ticker.lagSmoothing(0);
 
-if (document.readyState === "complete") {
-  // parallaxImagesAnimation();
-  heroAnimation();
-  pageHeroLoadAnimations();
-  pageHeroAnimations();
-} else {
-  window.addEventListener("load", () => {
-    heroAnimation();
-    pageHeroAnimations();
-    pageHeroLoadAnimations();
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+const domLoaded = () => {
   // universal animations
   fadeInAnimation();
   slideIn();
@@ -80,4 +65,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // error
   ErrorPageAnimations();
-});
+};
+
+if (document.readyState === "complete") {
+  // parallaxImagesAnimation();
+  heroAnimation();
+  pageHeroLoadAnimations();
+  pageHeroAnimations();
+  domLoaded();
+} else {
+  window.addEventListener("load", () => {
+    heroAnimation();
+    pageHeroAnimations();
+    pageHeroLoadAnimations();
+    domLoaded();
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {});
