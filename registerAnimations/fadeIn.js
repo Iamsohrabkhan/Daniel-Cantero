@@ -1,4 +1,3 @@
-
 const fadeInAnimation = () => {
   gsap.registerEffect({
     name: "fade",
@@ -25,14 +24,18 @@ const fadeInAnimation = () => {
     },
   });
 
-
-  
-
   const privacyAndTerms = gsap.utils.toArray(
     ".privacy_heading_wrapper, .privacy_lists, .privac_information_heading",
   );
   if (privacyAndTerms.length) {
     privacyAndTerms.forEach((curr) => {
+      gsap.effects.fade(curr);
+    });
+  }
+
+  const el = gsap.utils.toArray("[data-fade='in']");
+  if (el.length) {
+    el.forEach((curr) => {
       gsap.effects.fade(curr);
     });
   }

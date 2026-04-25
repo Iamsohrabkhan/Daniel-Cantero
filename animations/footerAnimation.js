@@ -18,7 +18,6 @@ const footerAnimations = () => {
     "footer .btn",
     // ".footer_copyright > *",
   ]);
-  
 
   tl.fromTo(
     ".footer_line1 .footer_char",
@@ -49,11 +48,19 @@ const footerAnimations = () => {
     },
     0.2,
   );
-  tl.add(gsap.effects.fade(list),0);
+  tl.add(gsap.effects.fade(list), 0);
   // tl.add(gsap.effects.fade(copyrightText));
 
   // ===== Footer background reveal =====
 
+  const grid2 = createGridController(document.querySelector(".footer_canva"), {
+    gridSize: 10,
+    cellSize: 120,
+    enableHover: true,
+    elasticStrength: 30,
+    liquidEffect: 5,
+    waveAmplitude: 0,
+  });
   if (footerBg) {
     const isDesktop = window.innerWidth > 478;
     !isDesktop && footerBg.classList.add("reveal");
@@ -64,9 +71,13 @@ const footerAnimations = () => {
       end: "bottom top",
       onEnter: () => {
         tl.play();
+        gsap.delayedCall(0.4, () => {
+          grid2.create();
+        });
       },
       onLeaveBack: () => {
         tl.pause(0);
+        grid2.destroy();
       },
       ...(isDesktop && {
         toggleClass: { targets: footerBg, className: "reveal" },

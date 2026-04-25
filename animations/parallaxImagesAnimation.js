@@ -48,6 +48,7 @@ const parallaxImagesAnimation = () => {
     });
   }
 };
+
 // page hero section animations
 const projectAnimation = () => {
   const projectTitle = gsap.utils.toArray(
