@@ -82,4 +82,38 @@ if (document.readyState === "complete") {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {});
+document.addEventListener("DOMContentLoaded", () => {
+  
+(function () {
+  const line = "==============================================";
+
+  console.log(`%c${line}`, "color: #888;");
+  console.log(
+    "%c🚀 Website developed by Sohrab Khan",
+    "color: #111; font-size: 16px; font-weight: 700;"
+  );
+  console.log(
+    "%c🌐 https://sohrabkhan.dev/",
+    "color: #4CAF50; font-size: 14px; font-weight: 600;"
+  );
+  console.log(`%c${line}`, "color: #888;");
+})();
+
+
+(function () {
+  const comment = document.createComment(`
+==================================================
+🚀 Website developed by Sohrab Khan
+🌐 https://sohrabkhan.dev/
+
+Frontend Developer | Animation Specialist
+Creating modern, high-quality web animations and interactive experiences.
+
+For collaboration or project inquiries,
+feel free to get in touch.
+==================================================
+  `);
+
+  document.documentElement.prepend(comment);
+})();
+});
