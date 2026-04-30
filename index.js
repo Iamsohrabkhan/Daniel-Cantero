@@ -1,7 +1,7 @@
 // import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
-
+gsap.config({ nullTargetWarn: false });
 CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
 CustomEase.create("tertially", "0.6, 0.2, 0, 1");
@@ -83,25 +83,23 @@ if (document.readyState === "complete") {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  
-(function () {
-  const line = "==============================================";
+  (function () {
+    const line = "==============================================";
 
-  console.log(`%c${line}`, "color: #888;");
-  console.log(
-    "%c🚀 Website developed by Sohrab Khan",
-    "color: #111; font-size: 16px; font-weight: 700;"
-  );
-  console.log(
-    "%c🌐 https://sohrabkhan.dev/",
-    "color: #4CAF50; font-size: 14px; font-weight: 600;"
-  );
-  console.log(`%c${line}`, "color: #888;");
-})();
+    console.log(`%c${line}`, "color: #888;");
+    console.log(
+      "%c🚀 Website developed by Sohrab Khan",
+      "color: #111; font-size: 16px; font-weight: 700;",
+    );
+    console.log(
+      "%c🌐 https://sohrabkhan.dev/",
+      "color: #4CAF50; font-size: 14px; font-weight: 600;",
+    );
+    console.log(`%c${line}`, "color: #888;");
+  })();
 
-
-(function () {
-  const comment = document.createComment(`
+  (function () {
+    const comment = document.createComment(`
 ==================================================
 🚀 Website developed by Sohrab Khan
 🌐 https://sohrabkhan.dev/
@@ -114,6 +112,6 @@ feel free to get in touch.
 ==================================================
   `);
 
-  document.documentElement.prepend(comment);
-})();
+    document.documentElement.prepend(comment);
+  })();
 });
