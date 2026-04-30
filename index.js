@@ -1,7 +1,7 @@
 // import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
-gsap.config({ nullTargetWarn: false });
+gsap.config({ nullTargetWarn: false, });
 CustomEase.create("primary", "0.8,0.2,0,1");
 CustomEase.create("secondary", "0.6, 0.4, 0, 1");
 CustomEase.create("tertially", "0.6, 0.2, 0, 1");
@@ -84,6 +84,8 @@ if (document.readyState === "complete") {
 
 document.addEventListener("DOMContentLoaded", () => {
   (function () {
+    console.clear();
+
     const line = "==============================================";
 
     console.log(`%c${line}`, "color: #888;");
