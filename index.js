@@ -34,6 +34,7 @@ gsap.ticker.add((time) => {
 
 gsap.ticker.lagSmoothing(0);
 
+
 const domLoaded = () => {
   // universal animations
   fadeInAnimation();
@@ -65,6 +66,49 @@ const domLoaded = () => {
 
   // error
   ErrorPageAnimations();
+  function initLanguageSwitcherOverlay() {
+  const original = document.querySelector(".brxe-polylang-language-switcher");
+  if (!original) return;
+
+  // Clone the switcher for visual overlay
+  const clone = original.cloneNode(true);
+
+  clone.id = "lang-switcher-overlay";
+
+  // Base styles for overlay
+  Object.assign(clone.style, {
+    position: "fixed",
+    zIndex: "9999",
+    pointerEvents: "none",
+    margin: "0",
+  });
+
+  // Important: prevent blend inheritance issues visually
+  clone.style.mixBlendMode = "normal";
+  clone.style.isolation = "isolate";
+
+  document.body.appendChild(clone);
+
+  function updatePosition() {
+    const rect = original.getBoundingClientRect();
+
+    clone.style.left = `${rect.left}px`;
+    clone.style.top = `${rect.top}px`;
+    clone.style.width = `${rect.width}px`;
+    clone.style.height = `${rect.height}px`;
+  }
+
+  // Initial position
+  updatePosition();
+
+  // Keep in sync
+  window.addEventListener("scroll", updatePosition, { passive: true });
+  window.addEventListener("resize", updatePosition);
+
+  // Optional: observe layout shifts (Bricks often changes layout dynamically)
+  const observer = new ResizeObserver(updatePosition);
+  observer.observe(original);
+}
 };
 
 if (document.readyState === "complete") {
@@ -117,3 +161,49 @@ feel free to get in touch.
     document.documentElement.prepend(comment);
   })();
 });
+
+
+function initLanguageSwitcherOverlay() {
+  const original = document.querySelector(".brxe-polylang-language-switcher");
+  if (!original) return;
+
+  // Clone the switcher for visual overlay
+  const clone = original.cloneNode(true);
+
+  clone.id = "lang-switcher-overlay";
+
+  // Base styles for overlay
+  Object.assign(clone.style, {
+    position: "fixed",
+    zIndex: "9999",
+    pointerEvents: "none",
+    margin: "0",
+  });
+
+  // Important: prevent blend inheritance issues visually
+  clone.style.mixBlendMode = "normal";
+  clone.style.isolation = "isolate";
+
+  document.body.appendChild(clone);
+
+  function updatePosition() {
+    const rect = original.getBoundingClientRect();
+
+    clone.style.left = `${rect.left}px`;
+    clone.style.top = `${rect.top}px`;
+    clone.style.width = `${rect.width}px`;
+    clone.style.height = `${rect.height}px`;
+  }
+
+  // Initial position
+  updatePosition();
+
+  // Keep in sync
+  window.addEventListener("scroll", updatePosition, { passive: true });
+  window.addEventListener("resize", updatePosition);
+
+  // Optional: observe layout shifts (Bricks often changes layout dynamically)
+  const observer = new ResizeObserver(updatePosition);
+  observer.observe(original);
+}
+initLanguageSwitcherOverlay()
