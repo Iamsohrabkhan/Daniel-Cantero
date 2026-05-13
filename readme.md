@@ -32,6 +32,7 @@
 
 <script src="http://192.168.1.11:3000/animations/footerAnimation.js"></script>
 <script src="http://192.168.1.11:3000/animations/errorAnimations.js"></script>
+<script src="http://192.168.1.11:3000/animations/footerCursorAnimation.js"></script>
 
 <script src="http://192.168.1.11:3000/index.js"></script>
 <script src="http://192.168.1.11:3000/animations/marqueeAnimation.js"></script>
@@ -72,6 +73,7 @@
 <script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@f365ac40505df12259aa36575f7a4a0b1a665a01/animations/studioAnimations.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@f365ac40505df12259aa36575f7a4a0b1a665a01/animations/footerAnimation.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@f365ac40505df12259aa36575f7a4a0b1a665a01/animations/errorAnimations.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@f365ac40505df12259aa36575f7a4a0b1a665a01/animations/footerCursorAnimation.js"></script>
 
 <script src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/Daniel-Cantero@dfd94b73a403759a2a6b35a21e7af27dc9ae9bc4/index.js"></script>
 
