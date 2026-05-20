@@ -190,6 +190,12 @@
     0px 2em 0px #dedede;
   display: inline-block;
 }
+.hero_char {
+  text-shadow:
+    0px 1em 0px #F5FBFE,
+    0px 2em 0px #F5FBFE;
+  display: inline-block;
+}
 .section_heading_line {
   /* perspective: 1000px;
   transform-style: preserve-3d; */
