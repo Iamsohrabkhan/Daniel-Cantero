@@ -3,7 +3,7 @@ function initMarqueeAnimations(marquee) {
 
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
+      navigator.userAgent,
     ) || window.innerWidth < 768;
 
   // =========================
@@ -14,29 +14,24 @@ function initMarqueeAnimations(marquee) {
   const speedAttr = parseFloat(marquee.dataset.speed);
   const dragAttr = parseFloat(marquee.dataset.drag);
   const dampingAttr = parseFloat(marquee.dataset.damping);
+  const isDraggable = marquee.dataset.draggable !== "false";
 
   const autoScrollSpeed = !isNaN(speedAttr)
     ? clamp(speedAttr, -0.3, 0.3)
     : -0.05;
 
-  const dragSensitivity = !isNaN(dragAttr)
-    ? dragAttr
-    : isMobile
-    ? 0.035
-    : 0.03;
+  const dragSensitivity = !isNaN(dragAttr) ? dragAttr : isMobile ? 0.035 : 0.03;
 
   const releaseDamping = !isNaN(dampingAttr)
     ? dampingAttr
     : isMobile
-    ? 0.88
-    : 0.9;
+      ? 0.88
+      : 0.9;
 
   // =========================
   // SELECT ITEMS
   // =========================
-  let marqueeImages = marquee.querySelectorAll(
-    ".marquee_item"
-  );
+  let marqueeImages = marquee.querySelectorAll(".marquee_item");
 
   // =========================
   // CLONE ITEMS
@@ -51,9 +46,7 @@ function initMarqueeAnimations(marquee) {
   });
 
   // IMPORTANT: re-select AFTER cloning
-  marqueeImages = marquee.querySelectorAll(
-    ".marquee_image, .marquee_item"
-  );
+  marqueeImages = marquee.querySelectorAll(".marquee_image, .marquee_item");
 
   // =========================
   // GSAP CORE
@@ -163,42 +156,46 @@ function initMarqueeAnimations(marquee) {
 
   // =========================
   // POINTER EVENTS
+  // =========================// =========================
+  // POINTER EVENTS
   // =========================
-  marquee.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "touch") return;
+  if (isDraggable) {
+    marquee.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch") return;
 
-    handleDragStart(e.clientX);
-    marquee.setPointerCapture(e.pointerId);
-  });
+      handleDragStart(e.clientX);
+      marquee.setPointerCapture(e.pointerId);
+    });
 
-  window.addEventListener("pointermove", (e) => {
-    if (e.pointerType === "touch") return;
-    handleDragMove(e.clientX);
-  });
+    window.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      handleDragMove(e.clientX);
+    });
 
-  window.addEventListener("pointerup", (e) => {
-    if (e.pointerType === "touch") return;
-    handleDragEnd();
-  });
-
+    window.addEventListener("pointerup", (e) => {
+      if (e.pointerType === "touch") return;
+      handleDragEnd();
+    });
+  }
   // =========================
   // TOUCH EVENTS
   // =========================
-  marquee.addEventListener("touchstart", (e) => {
-    if (e.touches.length === 1) {
-      handleDragStart(e.touches[0].clientX);
-    }
-  });
+  if (isDraggable) {
+    marquee.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        handleDragStart(e.touches[0].clientX);
+      }
+    });
 
-  marquee.addEventListener("touchmove", (e) => {
-    if (e.touches.length === 1) {
-      handleDragMove(e.touches[0].clientX);
-    }
-  });
+    marquee.addEventListener("touchmove", (e) => {
+      if (e.touches.length === 1) {
+        handleDragMove(e.touches[0].clientX);
+      }
+    });
 
-  marquee.addEventListener("touchend", handleDragEnd);
-  marquee.addEventListener("touchcancel", handleDragEnd);
-
+    marquee.addEventListener("touchend", handleDragEnd);
+    marquee.addEventListener("touchcancel", handleDragEnd);
+  }
   // =========================
   // MAIN LOOP
   // =========================
@@ -239,7 +236,7 @@ function initMarqueeAnimations(marquee) {
   // =========================
   // INIT STYLES
   // =========================
-  marquee.style.cursor = "grab";
+  marquee.style.cursor = isDraggable ? "grab" : "default";
   marquee.style.userSelect = "none";
   marquee.style.touchAction = "pan-y";
 
@@ -267,7 +264,7 @@ function initMarqueeAnimations(marquee) {
         start: "top 90%",
         once: true,
       },
-    }
+    },
   );
 }
 
